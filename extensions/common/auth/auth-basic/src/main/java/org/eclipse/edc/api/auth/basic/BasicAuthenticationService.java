@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+// &begin[feat_Basic_Token_Auth]
 public class BasicAuthenticationService implements AuthenticationService {
 
     private static final String BASIC_AUTH_HEADER_NAME = "Authorization";
@@ -36,10 +37,12 @@ public class BasicAuthenticationService implements AuthenticationService {
             Vault vault,
             List<BasicAuthenticationExtension.ConfigCredentials> basicAuthUsersWithVaultKeyConfigs,
             Monitor monitor) {
+
         this.vault = vault;
         this.basicAuthUsersWithVaultKeyConfigs = basicAuthUsersWithVaultKeyConfigs;
         this.monitor = monitor;
         b64Decoder = Base64.getDecoder();
+
     }
 
     /**
@@ -118,3 +121,4 @@ public class BasicAuthenticationService implements AuthenticationService {
         }
     }
 }
+//&end[feat_Basic_Token_Auth]
