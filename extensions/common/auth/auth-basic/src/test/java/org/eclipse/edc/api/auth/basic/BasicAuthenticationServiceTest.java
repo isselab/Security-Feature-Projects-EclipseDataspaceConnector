@@ -16,6 +16,7 @@ package org.eclipse.edc.api.auth.basic;
 
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.security.Vault;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
+@Critical(secrecy = {"isAuthenticated(Map):boolean"})
 class BasicAuthenticationServiceTest {
 
     private static final List<BasicAuthenticationExtension.ConfigCredentials> TEST_CREDENTIALS = List.of(

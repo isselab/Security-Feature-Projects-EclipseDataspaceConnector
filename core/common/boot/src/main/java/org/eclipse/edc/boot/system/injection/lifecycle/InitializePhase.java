@@ -19,6 +19,8 @@ import org.eclipse.edc.boot.system.injection.Injector;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 
 import static java.lang.String.format;
 
@@ -26,11 +28,13 @@ import static java.lang.String.format;
  * Represents an {@link ServiceExtension}'s lifecycle phase where it's {@linkplain ServiceExtension#initialize(ServiceExtensionContext)} method is invoked by the
  * {@link ExtensionLifecycleManager}.
  */
+@Critical(secrecy = {"initialize(ServiceExtensionContext)"})
 public class InitializePhase extends Phase {
-    protected InitializePhase(Injector injector, InjectionContainer<ServiceExtension> container, ServiceExtensionContext context, Monitor monitor) {
+    @Secrecy
+	protected InitializePhase(Injector injector, InjectionContainer<ServiceExtension> container, ServiceExtensionContext context, Monitor monitor) {
         super(injector, container, context, monitor);
     }
-
+    @Secrecy
     protected void initialize() {
         // call initialize
         var target = getTarget();

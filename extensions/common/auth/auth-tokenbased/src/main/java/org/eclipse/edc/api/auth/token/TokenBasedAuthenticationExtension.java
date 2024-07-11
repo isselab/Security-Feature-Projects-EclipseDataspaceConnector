@@ -24,6 +24,8 @@ import org.eclipse.edc.runtime.metamodel.annotation.Setting;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 
 import java.util.UUID;
 
@@ -32,6 +34,7 @@ import java.util.UUID;
  */
 @Provides(AuthenticationService.class)
 @Extension(value = TokenBasedAuthenticationExtension.NAME)
+@Critical(secrecy = {"TokenBasedAuthenticationService(String):void"})
 public class TokenBasedAuthenticationExtension implements ServiceExtension {
 
     public static final String NAME = "Static token API Authentication";
@@ -48,6 +51,7 @@ public class TokenBasedAuthenticationExtension implements ServiceExtension {
     }
 
     @Override
+    @Secrecy
     public void initialize(ServiceExtensionContext context) {
         String apiKey = null;
 

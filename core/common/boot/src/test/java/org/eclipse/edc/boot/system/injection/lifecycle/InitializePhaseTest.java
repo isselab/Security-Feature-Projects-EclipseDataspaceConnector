@@ -17,6 +17,7 @@ package org.eclipse.edc.boot.system.injection.lifecycle;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -26,7 +27,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-
+@Critical(secrecy = {"InitializePhase.initialize()","InitializePhase.InitializePhase(Injector,InjectionContainer,ServiceExtensionContext,Monitor)"})
 class InitializePhaseTest extends PhaseTest {
 
     @Test

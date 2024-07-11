@@ -44,6 +44,8 @@ import org.eclipse.edc.web.spi.WebServer;
 import org.eclipse.edc.web.spi.WebService;
 import org.eclipse.edc.web.spi.configuration.WebServiceConfigurer;
 import org.eclipse.edc.web.spi.configuration.WebServiceSettings;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 
 import java.util.Map;
 
@@ -56,6 +58,7 @@ import static org.eclipse.edc.spi.constants.CoreConstants.JSON_LD;
  */
 @Provides(ManagementApiConfiguration.class)
 @Extension(value = ManagementApiConfigurationExtension.NAME)
+@Critical(secrecy = {"webService:WebService"})
 public class ManagementApiConfigurationExtension implements ServiceExtension {
 
     public static final String NAME = "Management API configuration";
@@ -73,6 +76,7 @@ public class ManagementApiConfigurationExtension implements ServiceExtension {
             .build();
     private static final String MANAGEMENT_SCOPE = "MANAGEMENT_API";
     @Inject
+    @Secrecy
     private WebService webService;
     @Inject
     private WebServer webServer;
@@ -93,7 +97,7 @@ public class ManagementApiConfigurationExtension implements ServiceExtension {
     public String name() {
         return NAME;
     }
-
+    @Secrecy
     @Override
     public void initialize(ServiceExtensionContext context) {
         var webServiceConfiguration = configurator.configure(context, webServer, SETTINGS);

@@ -17,6 +17,8 @@ package org.eclipse.edc.api.auth.spi;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import org.eclipse.edc.web.spi.exception.AuthenticationFailedException;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,10 +31,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
+@Critical(secrecy = {"isAuthenticated(Map):boolean" , "AuthenticationRequestFilter.filter(ContainerRequestContext):void" , "AuthenticationRequestFilter.AuthenticationRequestFilter(AuthenticationService)"})
 class AuthenticationRequestFilterTest {
-
+	 
     private AuthenticationRequestFilter filter;
+	
     private AuthenticationService authSrvMock;
 
     @BeforeEach
@@ -41,6 +44,7 @@ class AuthenticationRequestFilterTest {
         filter = new AuthenticationRequestFilter(authSrvMock);
     }
 
+   
     @Test
     void filter() {
         when(authSrvMock.isAuthenticated(anyMap())).thenReturn(true);
@@ -51,6 +55,7 @@ class AuthenticationRequestFilterTest {
         verify(authSrvMock).isAuthenticated(anyMap());
     }
 
+    
     @Test
     void filter_serviceThrowsException() throws IOException {
         var exc = new AuthenticationFailedException("test");
@@ -63,7 +68,7 @@ class AuthenticationRequestFilterTest {
         verify(authSrvMock).isAuthenticated(anyMap());
     }
 
-
+    
     @Test
     void filter_notAuthorized() {
         when(authSrvMock.isAuthenticated(anyMap())).thenReturn(false);

@@ -16,16 +16,23 @@ package org.eclipse.edc.api.auth.token;
 
 import org.eclipse.edc.api.auth.spi.AuthenticationService;
 import org.eclipse.edc.web.spi.exception.AuthenticationFailedException;
+import org.gravity.security.annotations.requirements.*;
+
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+//&begin[feat_token-auth]
+@Critical(secrecy = {"hardCodedApiKey:String" , "TokenBasedAuthenticationService.checkApiKeyValid(List):boolean"}, integrity = {"hardCodedApiKey:String"})
 public class TokenBasedAuthenticationService implements AuthenticationService {
-
+    
+	
     private static final String API_KEY_HEADER_NAME = "x-api-key";
+	@Secrecy
+	@Integrity
     private final String hardCodedApiKey; //todo: have a list of API keys?
-
+    @Secrecy
     public TokenBasedAuthenticationService(String hardCodedApiKey) {
         this.hardCodedApiKey = hardCodedApiKey;
     }
@@ -36,6 +43,7 @@ public class TokenBasedAuthenticationService implements AuthenticationService {
      * @param headers The headers, that have to contain the "X-Api-Key" header.
      * @throws IllegalArgumentException The map of headers did not contain the "X-Api-Key" header
      */
+    @Secrecy
     @Override
     public boolean isAuthenticated(Map<String, List<String>> headers) {
 
@@ -48,8 +56,9 @@ public class TokenBasedAuthenticationService implements AuthenticationService {
 
         return apiKey.map(this::checkApiKeyValid).orElseThrow(() -> new AuthenticationFailedException(API_KEY_HEADER_NAME + " not found"));
     }
-
+    @Secrecy
     private boolean checkApiKeyValid(List<String> apiKeys) {
         return apiKeys.size() == 1 && apiKeys.stream().allMatch(hardCodedApiKey::equalsIgnoreCase);
     }
 }
+//&end[feat_token-auth]
