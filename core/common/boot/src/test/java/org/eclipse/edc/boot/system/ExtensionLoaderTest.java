@@ -33,6 +33,7 @@ import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.system.MonitorExtension;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,6 +56,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@Critical( secrecy= { 
+		"bootServiceExtensions(List<InjectionContainer<ServiceExtension>>, ServiceExtensionContext):void"})
 class ExtensionLoaderTest {
 
     private final ServiceLocator serviceLocator = mock(ServiceLocator.class);

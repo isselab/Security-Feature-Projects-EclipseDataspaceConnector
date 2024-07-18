@@ -28,6 +28,7 @@ import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.system.configuration.ConfigFactory;
 import org.eclipse.edc.web.spi.WebService;
 import org.eclipse.edc.web.spi.configuration.WebServiceConfiguration;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -42,12 +43,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical ( secrecy= {"initialize_shouldBeRegisteredAsManagementApiService(ServiceExtensionContext):void", "HttpWebhookExtension.initialize(ServiceExtensionContext):void"})
 class HttpWebhookExtensionTest {
 
     private HttpWebhookExtension extension;
     private final WebService webService = mock(WebService.class);
     private final Monitor monitor = mock(Monitor.class);
-
+ 
     @BeforeEach
     void setup(ServiceExtensionContext context, ObjectFactory factory) {
         var webServiceConfiguration = WebServiceConfiguration.Builder.newInstance()

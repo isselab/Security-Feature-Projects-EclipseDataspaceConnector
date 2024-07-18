@@ -32,7 +32,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-@Critical(secrecy = {"isAuthenticated(Map):boolean"})
+@Critical(secrecy = {"isAuthenticated(Map):boolean" ,"isAuthorized(String):void" ,"isAuthorized_headerNotPresent():void"})
 class BasicAuthenticationServiceTest {
 
     private static final List<BasicAuthenticationExtension.ConfigCredentials> TEST_CREDENTIALS = List.of(
@@ -141,7 +141,7 @@ class BasicAuthenticationServiceTest {
         assertThat(service.isAuthenticated(map)).isFalse();
     }
 
-    @Test
+    @Test 
     void isAuthorized_wrongVaultKey() {
         var wrongVaultKeyConfig = List.of(
                 new BasicAuthenticationExtension.ConfigCredentials("usera", "wrong.key")

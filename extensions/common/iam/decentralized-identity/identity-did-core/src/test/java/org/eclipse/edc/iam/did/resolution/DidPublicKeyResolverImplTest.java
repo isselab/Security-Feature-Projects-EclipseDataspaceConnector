@@ -25,6 +25,7 @@ import org.eclipse.edc.iam.did.spi.document.VerificationMethod;
 import org.eclipse.edc.iam.did.spi.resolution.DidResolverRegistry;
 import org.eclipse.edc.keys.spi.KeyParserRegistry;
 import org.eclipse.edc.spi.result.Result;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -41,7 +42,12 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
+@Critical(secrecy = {"resolveKey(String):Result" ,"resolve_didNotFound():void",
+		"resolve_keyIdNullMultipleKeys():void",
+		"resolve_keyIdIsNull_onlyOneVerificationMethod():void",
+		"resolve_didDoesNotContainPublicKey():void",
+		"resolve_withVerificationMethodUrlAsId():void"
+		})
 class DidPublicKeyResolverImplTest {
 
     public static final String KEYID = "my-key1";

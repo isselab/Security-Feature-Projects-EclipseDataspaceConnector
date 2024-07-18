@@ -36,7 +36,7 @@ public class TokenBasedAuthenticationService implements AuthenticationService {
     public TokenBasedAuthenticationService(String hardCodedApiKey) {
         this.hardCodedApiKey = hardCodedApiKey;
     }
-
+ 
     /**
      * Checks whether a particular request is authorized based on the "X-Api-Key" header.
      *
