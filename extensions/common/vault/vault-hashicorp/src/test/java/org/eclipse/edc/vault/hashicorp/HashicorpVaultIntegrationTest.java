@@ -18,6 +18,7 @@ package org.eclipse.edc.vault.hashicorp;
 import org.eclipse.edc.junit.annotations.ComponentTest;
 import org.eclipse.edc.junit.extensions.EdcExtension;
 import org.eclipse.edc.spi.security.Vault;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,6 +41,13 @@ import static org.eclipse.edc.vault.hashicorp.HashicorpVaultExtension.VAULT_URL;
 @ComponentTest
 @Testcontainers
 @ExtendWith(EdcExtension.class)
+@Critical ( secrecy= {"testResolveSecret_exists(Vault)",
+		"testResolveSecret_inSubDirectory(Vault)",
+		"testSetSecret_exists(Vault):void",
+		"resolveSecret(String):String",
+		"storeSecret(String,String):Result",
+		"testDeleteSecret_exists(Vault):void",
+		"testDeleteSecret_doesNotExist(Vault):void"})
 class HashicorpVaultIntegrationTest {
     static final String DOCKER_IMAGE_NAME = "vault:1.9.6";
     static final String VAULT_ENTRY_KEY = "testing";

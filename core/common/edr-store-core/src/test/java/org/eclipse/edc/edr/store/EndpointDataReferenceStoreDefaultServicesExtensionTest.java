@@ -24,6 +24,7 @@ import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.system.configuration.Config;
 import org.eclipse.edc.spi.types.TypeManager;
 import org.eclipse.edc.spi.types.domain.DataAddress;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,6 +39,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical( secrecy= {"InMemoryVault.storeSecret(String,String):Result",
+		"Vault.storeSecret(String,String):Result",
+		"Vault.storeSecret(String,String):Result"})
 public class EndpointDataReferenceStoreDefaultServicesExtensionTest {
 
     private final Vault vault = mock();

@@ -16,6 +16,8 @@ package org.eclipse.edc.keys.spi;
 
 import org.eclipse.edc.runtime.metamodel.annotation.ExtensionPoint;
 import org.eclipse.edc.spi.result.Result;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 
 import java.security.PrivateKey;
 
@@ -24,6 +26,7 @@ import java.security.PrivateKey;
  */
 @FunctionalInterface
 @ExtensionPoint
+
 public interface PrivateKeyResolver {
 
     /**

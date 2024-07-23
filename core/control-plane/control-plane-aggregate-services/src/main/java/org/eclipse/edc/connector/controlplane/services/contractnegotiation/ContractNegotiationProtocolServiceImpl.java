@@ -41,6 +41,7 @@ import org.eclipse.edc.spi.result.ServiceResult;
 import org.eclipse.edc.spi.telemetry.Telemetry;
 import org.eclipse.edc.spi.types.domain.message.RemoteMessage;
 import org.eclipse.edc.transaction.spi.TransactionContext;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -50,6 +51,7 @@ import java.util.function.Function;
 import static org.eclipse.edc.connector.controlplane.contract.spi.types.negotiation.ContractNegotiation.Type.CONSUMER;
 import static org.eclipse.edc.connector.controlplane.contract.spi.types.negotiation.ContractNegotiation.Type.PROVIDER;
 
+@Critical(secrecy= {"ProtocolTokenValidatorImpl.verify(TokenRepresentation,String,Policy,RemoteMessage):ServiceResult"})
 public class ContractNegotiationProtocolServiceImpl implements ContractNegotiationProtocolService {
 
     @PolicyScope

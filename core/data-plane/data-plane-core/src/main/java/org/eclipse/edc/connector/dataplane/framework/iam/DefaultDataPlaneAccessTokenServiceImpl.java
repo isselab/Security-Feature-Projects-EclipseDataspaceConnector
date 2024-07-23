@@ -31,6 +31,7 @@ import org.eclipse.edc.token.spi.TokenDecorator;
 import org.eclipse.edc.token.spi.TokenGenerationService;
 import org.eclipse.edc.token.spi.TokenValidationRule;
 import org.eclipse.edc.token.spi.TokenValidationService;
+import org.gravity.security.annotations.requirements.Critical;
 
 import java.security.PrivateKey;
 import java.util.ArrayList;
@@ -47,6 +48,7 @@ import static org.eclipse.edc.spi.constants.CoreConstants.EDC_NAMESPACE;
  * This implementation of the {@link DataPlaneAccessTokenService} uses a backing storage ({@link AccessTokenDataStore}) to keep a record of all
  * tokens it has issued. Tokens are in JWT format.
  */
+@Critical( secrecy= {"TokenValidationService.validate(String,PublicKeyResolver,List):Result"})
 public class DefaultDataPlaneAccessTokenServiceImpl implements DataPlaneAccessTokenService {
     public static final String TOKEN_ID = "jti";
     private static final List<TokenValidationRule> DATAPLANE_ACCESS_TOKEN_RULES = List.of(

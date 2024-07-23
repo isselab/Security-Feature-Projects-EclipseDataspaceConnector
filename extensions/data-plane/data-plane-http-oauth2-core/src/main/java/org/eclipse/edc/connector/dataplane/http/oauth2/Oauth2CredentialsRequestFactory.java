@@ -25,6 +25,7 @@ import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.types.domain.DataAddress;
 import org.eclipse.edc.token.JwtGenerationService;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -42,6 +43,7 @@ import static org.eclipse.edc.iam.oauth2.spi.Oauth2DataAddressSchema.VALIDITY;
 /**
  * Factory class that provides methods to build {@link Oauth2CredentialsRequest} instances
  */
+@Critical ( secrecy= {"resolveSecret(String):String"})
 public class Oauth2CredentialsRequestFactory {
 
     private static final long DEFAULT_TOKEN_VALIDITY = TimeUnit.MINUTES.toSeconds(5);

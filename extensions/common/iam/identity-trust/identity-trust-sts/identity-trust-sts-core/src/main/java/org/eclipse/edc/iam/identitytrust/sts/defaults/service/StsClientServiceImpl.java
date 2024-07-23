@@ -20,11 +20,13 @@ import org.eclipse.edc.iam.identitytrust.sts.spi.store.StsClientStore;
 import org.eclipse.edc.spi.result.ServiceResult;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.transaction.spi.TransactionContext;
+import org.gravity.security.annotations.requirements.Critical;
 
 import java.util.Optional;
 
 import static java.lang.String.format;
 
+@Critical(secrecy={"resolveSecret(String):String"})
 public class StsClientServiceImpl implements StsClientService {
 
     private final StsClientStore stsClientStore;

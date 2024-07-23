@@ -18,6 +18,7 @@ import org.eclipse.edc.junit.assertions.AbstractResultAssert;
 import org.eclipse.edc.keys.spi.KeyParserRegistry;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.security.Vault;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -28,7 +29,17 @@ import java.security.PublicKey;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
+@Critical ( secrecy={"resolveKey(String):Result",
+		"resolve_withCache():void" ,
+		"resolve_withVault():void",
+		"resolve_notFound():void ",
+		"resolve_wrongKeyType()",
+		"resolve_wrongKeyFormat():void",
+		"resolveSecret(String):String",
+		"addRawKey(String, String):Result",
+		"resolveSecret(String):String"
+		
+		})
 class LocalPublicKeyServiceImplTest {
 
     private LocalPublicKeyServiceImpl localPublicKeyService;

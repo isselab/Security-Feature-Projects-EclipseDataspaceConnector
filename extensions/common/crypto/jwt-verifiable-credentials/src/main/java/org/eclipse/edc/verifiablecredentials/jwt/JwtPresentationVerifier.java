@@ -26,6 +26,7 @@ import org.eclipse.edc.token.rules.AudienceValidationRule;
 import org.eclipse.edc.token.spi.TokenValidationRule;
 import org.eclipse.edc.token.spi.TokenValidationRulesRegistry;
 import org.eclipse.edc.token.spi.TokenValidationService;
+import org.gravity.security.annotations.requirements.Critical;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ import java.util.Optional;
  *
  * <em>Note: VP-JWTs may only contain VCs also represented in JWT format. Mixing formats is not allowed.</em>
  */
+@Critical(secrecy="TokenValidationService.validate(String,PublicKeyResolver,List):Result")
 public class JwtPresentationVerifier implements CredentialVerifier {
 
     public static final String JWT_VC_TOKEN_CONTEXT = "iatp-vc";

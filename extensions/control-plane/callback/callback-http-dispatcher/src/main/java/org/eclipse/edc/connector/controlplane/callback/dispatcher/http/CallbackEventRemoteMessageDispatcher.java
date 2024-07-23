@@ -23,6 +23,7 @@ import okhttp3.Response;
 import org.eclipse.edc.connector.controlplane.services.spi.callback.CallbackEventRemoteMessage;
 import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.spi.security.Vault;
+import org.gravity.security.annotations.requirements.Critical;
 
 import java.util.Optional;
 import java.util.function.Function;
@@ -32,6 +33,8 @@ import static java.lang.String.format;
 /**
  * Implementation of {@link GenericHttpDispatcherDelegate} that works for message of type {@link CallbackEventRemoteMessage}
  */
+@Critical( secrecy={ "InMemoryVault.resolveSecret(String):String",
+		"Vault.resolveSecret(String):String"})
 public class CallbackEventRemoteMessageDispatcher implements GenericHttpDispatcherDelegate<CallbackEventRemoteMessage, Void> {
 
     private static final String APPLICATION_JSON = "application/json";

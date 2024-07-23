@@ -30,28 +30,32 @@ import static jakarta.ws.rs.HttpMethod.OPTIONS;
  * to be able to handle CORS requests properly, OPTIONS requests are not validated as their headers usually don't
  * contain credentials.
  */ 
-@Critical(secrecy = {"authenticationService:AuthenticationService", "TokenBasedAuthenticationService.isAuthenticated(Map):boolean"})
+@Critical(secrecy = {"authenticationService:AuthenticationService",
+		"AuthenticationService.isAuthenticated(Map):boolean",
+		"BasicAuthenticationService.isAuthenticated(Map):boolean",
+		"TokenBasedAuthenticationService.isAuthenticated(Map):boolean",
+		 "AuthenticationService.isAuthenticated(Map):boolean"})
 public class AuthenticationRequestFilter implements ContainerRequestFilter {
     @Secrecy
 	private final AuthenticationService authenticationService;
-
+  
     @Secrecy  
     public AuthenticationRequestFilter(AuthenticationService authenticationService) {
         this.authenticationService = authenticationService;
     }
-    @Secrecy
-    @Override
+    @Secrecy 
+    @Override 
     public void filter(ContainerRequestContext requestContext) {
         var headers = requestContext.getHeaders();
 
         // OPTIONS requests don't have credentials - do not authenticate
-        // &begin[use_basic_token_Auth]
+        // &begin[use_Basic_Token_Auth]
         if (!OPTIONS.equalsIgnoreCase(requestContext.getMethod())) {
             var isAuthenticated = authenticationService.isAuthenticated(headers.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)));
             if (!isAuthenticated) {
                 throw new AuthenticationFailedException();
             }
-            // &end[use_basic_token_Auth]
+            // &end[use_Basic_Token_Auth]
         }
     }
 }

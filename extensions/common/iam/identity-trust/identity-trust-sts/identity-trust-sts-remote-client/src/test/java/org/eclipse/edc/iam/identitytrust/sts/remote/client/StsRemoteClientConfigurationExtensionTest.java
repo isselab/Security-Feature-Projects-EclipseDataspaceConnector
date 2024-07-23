@@ -18,6 +18,7 @@ import org.eclipse.edc.junit.extensions.DependencyInjectionExtension;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.system.configuration.ConfigFactory;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,6 +34,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical (secrecy={"Vault.resolveSecret(String):String",
+"InMemoryVault.resolveSecret(String):String",
+"ServiceExtension.initialize(ServiceExtensionContext):void",
+"StsRemoteClientConfigurationExtensionTest.initialize(StsRemoteClientConfigurationExtension,ServiceExtensionContext,Vault):void"})
 public class StsRemoteClientConfigurationExtensionTest {
 
     @BeforeEach

@@ -18,6 +18,7 @@ import org.eclipse.edc.iam.identitytrust.core.scope.IatpScopeExtractorFunction;
 import org.eclipse.edc.junit.extensions.DependencyInjectionExtension;
 import org.eclipse.edc.policy.engine.spi.PolicyEngine;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +32,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical(secrecy= {"IatpScopeExtractorExtension.initialize(ServiceExtensionContext):void",
+		"initialize(ServiceExtensionContext, IatpScopeExtractorExtension):void" ,
+		"initialize(ServiceExtensionContext):void"}) 
 class IatpScopeExtractorExtensionTest {
 
 

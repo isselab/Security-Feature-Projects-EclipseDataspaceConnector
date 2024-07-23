@@ -20,6 +20,7 @@ import org.eclipse.edc.junit.extensions.DependencyInjectionExtension;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.system.configuration.ConfigFactory;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,6 +42,8 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical(secrecy= {"StsClientConfigurationExtensionTest.initialize_noClients(ServiceExtensionContext,StsClientConfigurationExtension):void",
+		"ServiceExtension.initialize(ServiceExtensionContext):void"})
 public class StsClientConfigurationExtensionTest implements ServiceExtension {
 
     private final StsClientStore clientStore = mock();

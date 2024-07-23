@@ -45,7 +45,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(DependencyInjectionExtension.class)
-@Critical(secrecy = {"ManagementApiConfigurationExtension.initialize(ServiceExtensionContext)"})
+@Critical(secrecy = {"ManagementApiConfigurationExtension.initialize(ServiceExtensionContext)",
+		"ServiceExtension.initialize(ServiceExtensionContext):void"})
 class ManagementApiConfigurationExtensionTest {
 
     private final WebServiceConfigurer configurer = mock();

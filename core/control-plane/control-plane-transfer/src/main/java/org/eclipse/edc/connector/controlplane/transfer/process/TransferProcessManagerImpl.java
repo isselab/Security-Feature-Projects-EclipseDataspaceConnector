@@ -57,6 +57,7 @@ import org.eclipse.edc.statemachine.ProcessorImpl;
 import org.eclipse.edc.statemachine.StateMachineManager;
 import org.eclipse.edc.statemachine.retry.AsyncStatusResultRetryProcess;
 import org.eclipse.edc.statemachine.retry.StatusResultRetryProcess;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -105,6 +106,10 @@ import static org.eclipse.edc.spi.types.domain.DataAddress.EDC_DATA_ADDRESS_SECR
  * If no processes need to be transitioned, the transfer manager will wait according to the defined {@link WaitStrategy}
  * before conducting the next iteration. A wait strategy may implement a backoff scheme.
  */
+@Critical( secrecy={"Vault.resolveSecret(String):String", 
+		"Vault.storeSecret(String,String):Result" ,
+		"InMemoryVault.resolveSecret(String):String",
+		"InMemoryVault.storeSecret(String,String):Result"})
 public class TransferProcessManagerImpl extends AbstractStateEntityManager<TransferProcess, TransferProcessStore>
         implements TransferProcessManager {
     private ResourceManifestGenerator manifestGenerator;

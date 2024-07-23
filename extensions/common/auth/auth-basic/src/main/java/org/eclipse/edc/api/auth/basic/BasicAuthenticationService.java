@@ -18,6 +18,7 @@ import org.eclipse.edc.api.auth.spi.AuthenticationService;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.security.Vault;
+import org.gravity.security.annotations.requirements.Critical;
 
 import java.util.Base64;
 import java.util.List;
@@ -25,6 +26,9 @@ import java.util.Map;
 import java.util.Objects;
 
 // &begin[feat_Basic_Token_Auth]
+@Critical ( secrecy= {"isAuthenticated(Map):boolean" ,
+		"Vault.resolveSecret(String):String",
+		"InMemoryVault.resolveSecret(String):String"}) 
 public class BasicAuthenticationService implements AuthenticationService {
 
     private static final String BASIC_AUTH_HEADER_NAME = "Authorization";
@@ -40,7 +44,7 @@ public class BasicAuthenticationService implements AuthenticationService {
 
         this.vault = vault;
         this.basicAuthUsersWithVaultKeyConfigs = basicAuthUsersWithVaultKeyConfigs;
-        this.monitor = monitor;
+        this.monitor = monitor; 
         b64Decoder = Base64.getDecoder();
 
     }

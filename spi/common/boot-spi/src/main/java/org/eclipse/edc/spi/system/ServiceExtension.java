@@ -14,15 +14,36 @@
 
 package org.eclipse.edc.spi.system;
 
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
+
 /**
  * Contributes services used by the runtime.
  * Service extensions are started after system boostrap.
  */
+@Critical( secrecy= {"InitializePhase.initialize():void",
+		 "ServiceExtension.initialize(ServiceExtensionContext):void",  
+		"IatpScopeExtractorExtensionTest.initialize(ServiceExtensionContext, IatpScopeExtractorExtension):void",
+		"StsClientConfigurationExtensionTest.initialize_noClients(ServiceExtensionContext,StsClientConfigurationExtension):void" ,
+		"testPrimaryMethod_loadKeyFromVault(ServiceExtensionContext, TokenBasedAuthenticationExtension):void",
+		"StsRemoteClientExtensionTest.initialize(StsRemoteClientExtension, ServiceExtensionContext):void",
+		"SqlAssetIndexServiceExtensionTest.shouldInitializeTheStore(SqlAssetIndexServiceExtension,ServiceExtensionContext):void",
+		"HashicorpVaultExtensionTest.start_withTokenRenewDisabled_shouldNotStartTokenRenewTask(ServiceExtensionContext):void",
+		"HashicorpVaultExtensionTest.shutdown_withTokenRenewTaskRunning_shouldStopTokenRenewTask(ServiceExtensionContext):void",
+		"HashicorpVaultExtensionTest.start_withTokenRenewEnabled_shouldStartTokenRenewTask(ServiceExtensionContext):void",
+		"HashicorpVaultExtensionTest.shutdown_withTokenRenewTaskNotRunning_shouldNotStopTokenRenewTask(ServiceExtensionContext):void",
+		"StsDefaultStoresExtensionTest.initialize(StsDefaultStoresExtension,ServiceExtensionContext):void",
+		"StsClientConfigurationExtensionTest.initialize_withClient(ServiceExtensionContext,StsClientConfigurationExtension):void",
+		"SecureTokenServiceApiExtensionTest.initialize(ServiceExtensionContext,SecureTokenServiceApiExtension):void",
+		"StsDefaultStoresExtensionTest.initialize(StsDefaultStoresExtension,ServiceExtensionContext):void",
+		"StsRemoteClientExtensionTest.initialize(StsRemoteClientExtension,ServiceExtensionContext):void",
+		"StsRemoteClientConfigurationExtensionTest.initialize(StsRemoteClientConfigurationExtension,ServiceExtensionContext,Vault):void"})
 public interface ServiceExtension extends SystemExtension {
 
-    /**
+    /** 
      * Initializes the extension.
      */
+	@Secrecy
     default void initialize(ServiceExtensionContext context) {
     }
 

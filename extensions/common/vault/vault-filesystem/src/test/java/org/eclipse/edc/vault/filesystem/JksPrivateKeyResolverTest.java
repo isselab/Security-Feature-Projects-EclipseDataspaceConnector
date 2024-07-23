@@ -19,6 +19,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.eclipse.edc.keys.keyparsers.PemParser;
 import org.eclipse.edc.keys.spi.KeyParserRegistry;
 import org.eclipse.edc.spi.result.Result;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @Disabled("This resolver will be refactored shortly")
+@Critical(secrecy= {"PrivateKeyResolver.resolvePrivateKey(String):Result"})
 class JksPrivateKeyResolverTest {
     private static final String PASSWORD = "test123";
     private static final String TEST_KEYSTORE = "edc-test-keystore.jks";

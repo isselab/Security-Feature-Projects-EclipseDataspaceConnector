@@ -45,6 +45,8 @@ import org.eclipse.edc.token.rules.ExpirationIssuedAtValidationRule;
 import org.eclipse.edc.token.rules.NotBeforeValidationRule;
 import org.eclipse.edc.token.spi.TokenDecorator;
 import org.eclipse.edc.token.spi.TokenGenerationService;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -67,6 +69,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@Critical(secrecy= {"Oauth2ServiceImplTest.setUp():void",
+		"AbstractPublicKeyResolver.resolveKey(String):Result",
+		"PublicKeyResolver.resolveKey(String):Result",
+		"LocalPublicKeyServiceResolver.resolveKey(String):Result",
+		"LocalPublicKeyServiceImpl.resolveKey(String):Result",
+		"Oauth2ServiceImplTest.verifyNoAudienceToken():void",
+		"Oauth2ServiceImplTest.verifyInvalidAttemptUseNotBeforeToken():void",
+		"Oauth2ServiceImplTest.verifyExpiredToken():void",
+		"Oauth2ServiceImplTest.verifyValidJwt():void",
+		"Oauth2ServiceImpl.verifyJwtToken(TokenRepresentation,VerificationContext):Result"} )
 class Oauth2ServiceImplTest {
 
     private static final String CLIENT_ID = "client-test";
@@ -86,8 +98,8 @@ class Oauth2ServiceImplTest {
     private final TokenDecorator jwtDecorator = mock(TokenDecorator.class);
     private Oauth2ServiceImpl authService;
     private JWSSigner jwsSigner;
-
-    @BeforeEach
+    
+    @BeforeEach 
     void setUp() throws JOSEException {
         var testKey = testKey();
         var privateKey = testKey.toPrivateKey();

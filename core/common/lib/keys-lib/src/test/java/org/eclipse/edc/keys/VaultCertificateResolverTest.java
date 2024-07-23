@@ -16,6 +16,7 @@ package org.eclipse.edc.keys;
 
 import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.spi.security.Vault;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
+@Critical (secrecy={"resolveCertificate():void" ,
+		"resolveCertificate_notFound():void",
+		"resolveCertificate_notFound():void",
+		"resolveSecret(String):String"
+		
+		})
 class VaultCertificateResolverTest {
     private static final String KEY = "key";
     private static final String TEST_CERT_FILE = "testCert.pem";

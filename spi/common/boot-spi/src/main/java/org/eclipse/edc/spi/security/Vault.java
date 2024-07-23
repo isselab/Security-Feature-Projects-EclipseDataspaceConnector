@@ -16,12 +16,16 @@ package org.eclipse.edc.spi.security;
 
 import org.eclipse.edc.runtime.metamodel.annotation.ExtensionPoint;
 import org.eclipse.edc.spi.result.Result;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * Provides secrets such as certificates and keys to the runtime.
  */
 @ExtensionPoint
+@Critical(secrecy= {"resolveSecret(String):String" ,
+	"storeSecret(String,String):Result" })
 public interface Vault {
 
     /**
@@ -31,6 +35,7 @@ public interface Vault {
      * @return the key as a string or null if not found. Binary data will be Base 64 encoded.
      */
     @Nullable
+    @Secrecy
     String resolveSecret(String key);
 
     /**
@@ -39,6 +44,7 @@ public interface Vault {
      * @param key   the secret key
      * @param value the serialized secret value
      */
+    @Secrecy
     Result<Void> storeSecret(String key, String value);
 
     /**

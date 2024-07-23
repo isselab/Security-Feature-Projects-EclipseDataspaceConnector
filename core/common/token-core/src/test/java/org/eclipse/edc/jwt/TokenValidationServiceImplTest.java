@@ -29,6 +29,8 @@ import org.eclipse.edc.token.TokenValidationRulesRegistryImpl;
 import org.eclipse.edc.token.TokenValidationServiceImpl;
 import org.eclipse.edc.token.spi.TokenValidationRule;
 import org.eclipse.edc.token.spi.TokenValidationService;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -46,6 +48,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
+@Critical ( secrecy= {"setUp():void" ,
+		"validationSuccess():void",
+		"validationFailure_cannotResolvePublicKey():void",
+		"validationFailure_multipleRulesFail()",
+		"TokenValidationService.validate(String,PublicKeyResolver,TokenValidationRule[]):Result",
+		"PublicKeyResolver.resolveKey(String):Result",
+		"LocalPublicKeyServiceImpl.resolveKey(String):Result",
+		"AbstractPublicKeyResolver.resolveKey(String):Result",
+		"AbstractPublicKeyResolver.resolveInternal(String):Result"})
 class TokenValidationServiceImplTest {
 
     private final Instant now = Instant.now();

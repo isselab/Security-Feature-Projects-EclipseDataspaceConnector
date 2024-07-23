@@ -43,6 +43,7 @@ import org.eclipse.edc.spi.types.domain.DataAddress;
 import org.eclipse.edc.spi.types.domain.message.RemoteMessage;
 import org.eclipse.edc.transaction.spi.TransactionContext;
 import org.eclipse.edc.validator.spi.DataAddressValidatorRegistry;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Clock;
@@ -57,6 +58,7 @@ import static org.eclipse.edc.connector.controlplane.transfer.spi.types.Transfer
 import static org.eclipse.edc.connector.controlplane.transfer.spi.types.TransferProcess.Type.PROVIDER;
 import static org.eclipse.edc.connector.controlplane.transfer.spi.types.TransferProcessStates.SUSPENDED;
 
+@Critical(secrecy= {"ProtocolTokenValidatorImpl.verify(TokenRepresentation,String,Policy,RemoteMessage):ServiceResult"})
 public class TransferProcessProtocolServiceImpl implements TransferProcessProtocolService {
 
     @PolicyScope

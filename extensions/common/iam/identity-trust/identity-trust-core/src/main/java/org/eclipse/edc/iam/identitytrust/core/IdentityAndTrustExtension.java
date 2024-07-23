@@ -57,6 +57,7 @@ import org.eclipse.edc.verifiablecredentials.jwt.rules.SubJwkIsNullRule;
 import org.eclipse.edc.verifiablecredentials.jwt.rules.TokenNotNullRule;
 import org.eclipse.edc.verifiablecredentials.linkeddata.DidMethodResolver;
 import org.eclipse.edc.verifiablecredentials.linkeddata.LdpVerifier;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URISyntaxException;
@@ -68,6 +69,9 @@ import static org.eclipse.edc.spi.constants.CoreConstants.JSON_LD;
 import static org.eclipse.edc.verifiablecredentials.jwt.JwtPresentationVerifier.JWT_VC_TOKEN_CONTEXT;
 
 @Extension("Identity And Trust Extension")
+@Critical ( secrecy = {"TokenValidationServiceImpl.validate(TokenRepresentation,PublicKeyResolver, List):Result",
+			"TokenValidationService.validate(TokenRepresentation,PublicKeyResolver,List):Result",
+           "IdentityAndTrustExtension.tokenValidationAction():TokenValidationAction"})
 public class IdentityAndTrustExtension implements ServiceExtension {
 
     public static final long DEFAULT_REVOCATION_CACHE_VALIDITY_MILLIS = 15 * 60 * 1000L;

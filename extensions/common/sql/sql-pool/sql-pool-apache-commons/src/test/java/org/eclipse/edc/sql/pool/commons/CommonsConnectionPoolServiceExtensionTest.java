@@ -24,6 +24,7 @@ import org.eclipse.edc.spi.system.configuration.Config;
 import org.eclipse.edc.spi.system.configuration.ConfigFactory;
 import org.eclipse.edc.sql.ConnectionFactory;
 import org.eclipse.edc.transaction.datasource.spi.DataSourceRegistry;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -57,6 +58,9 @@ import static org.mockito.Mockito.when;
 
 //sometimes hangs and causes the test to never finish.
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical (secrecy= { "storeSecret(String,String):Result",
+"resolveSecret(String):String",
+"ServiceExtension.initialize(ServiceExtensionContext):void"})
 class CommonsConnectionPoolServiceExtensionTest {
     private static final String DS_1_NAME = "ds1";
     private final DataSourceRegistry dataSourceRegistry = mock();

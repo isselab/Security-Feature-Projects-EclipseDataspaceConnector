@@ -29,6 +29,7 @@ import org.eclipse.edc.security.token.jwt.CryptoConverter;
 import org.eclipse.edc.spi.iam.ClaimToken;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.types.domain.DataAddress;
+import org.gravity.security.annotations.requirements.Critical;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -54,6 +55,8 @@ import static org.mockserver.model.JsonBody.json;
 import static org.mockserver.verify.VerificationTimes.exactly;
 
 @EndToEndTest
+@Critical (secrecy= {"InMemoryVault.resolveSecret(String):String" ,
+		"Vault.resolveSecret(String):String"})
 public class DataPlanePublicApiEndToEndTest extends AbstractDataPlaneTest {
 
     public static final String PUBLIC_KEY_ALIAS = "public-key";

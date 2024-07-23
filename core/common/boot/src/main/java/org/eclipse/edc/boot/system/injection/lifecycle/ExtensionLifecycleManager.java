@@ -49,6 +49,7 @@ import org.gravity.security.annotations.requirements.Secrecy;
  * @see StartPhase
  */
 @Critical(secrecy = { 
+		"ExtensionLoader.bootServiceExtensions(List,ServiceExtensionContext):void" ,
 		"inject():InitializePhase",		
 		"InitializePhase(Injector,InjectionContainer<ServiceExtension>, ServiceExtensionContext ,Monitor)",		
 		"initialize()",

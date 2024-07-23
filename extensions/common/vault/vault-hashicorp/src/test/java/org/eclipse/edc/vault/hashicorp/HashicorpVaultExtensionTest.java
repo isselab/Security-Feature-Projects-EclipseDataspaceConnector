@@ -21,6 +21,7 @@ import org.eclipse.edc.junit.extensions.DependencyInjectionExtension;
 import org.eclipse.edc.spi.system.ExecutorInstrumentation;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.types.TypeManager;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,6 +41,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical(secrecy= {"ServiceExtension.initialize(ServiceExtensionContext):void",
+		"HashicorpVaultExtensionTest.start_withTokenRenewEnabled_shouldStartTokenRenewTask(ServiceExtensionContext):void",
+		"HashicorpVaultExtensionTest.shutdown_withTokenRenewTaskRunning_shouldStopTokenRenewTask(ServiceExtensionContext):void"})
 class HashicorpVaultExtensionTest {
 
     private static final String URL = "https://test.com/vault";

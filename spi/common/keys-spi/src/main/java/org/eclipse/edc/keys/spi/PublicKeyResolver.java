@@ -15,6 +15,8 @@
 package org.eclipse.edc.keys.spi;
 
 import org.eclipse.edc.spi.result.Result;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 
 import java.security.PublicKey;
 
@@ -22,11 +24,16 @@ import java.security.PublicKey;
  * Resolves a public key given an ID. This resolver it's not intended to be used as injectable
  * since multiple {@link PublicKeyResolver} could be needed in the runtime at the same time.
  */
-@FunctionalInterface
+@FunctionalInterface  
+@Critical( secrecy= {"LocalPublicKeyDefaultExtensionTest.localPublicKeyService_withPathConfig(LocalPublicKeyDefaultExtension,ServiceExtensionContext):void",
+		"LocalPublicKeyDefaultExtensionTest.localPublicKeyService_withValueConfig(LocalPublicKeyDefaultExtension,ServiceExtensionContext):void",		
+"PublicKeyResolver.resolveKey(String):Result",
+"TransferDataPlaneCoreExtension.initialize(ServiceExtensionContext):void" })
 public interface PublicKeyResolver {
 
     /**
      * Resolves the key or return null if not found.
      */
-    Result<PublicKey> resolveKey(String id);
+	@Secrecy
+    Result<PublicKey> resolveKey(String id);  
 }

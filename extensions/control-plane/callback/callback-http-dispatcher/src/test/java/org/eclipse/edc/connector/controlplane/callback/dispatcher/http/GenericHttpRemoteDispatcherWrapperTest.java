@@ -26,6 +26,7 @@ import org.eclipse.edc.spi.event.EventEnvelope;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.types.TypeManager;
 import org.eclipse.edc.spi.types.domain.callback.CallbackAddress;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -55,6 +56,8 @@ import static org.mockserver.model.HttpResponse.response;
 import static org.mockserver.stop.Stop.stopQuietly;
 
 @ComponentTest
+@Critical( secrecy={"Vault.resolveSecret(String):String",
+		"InMemoryVault.resolveSecret(String):String"})
 public class GenericHttpRemoteDispatcherWrapperTest {
 
     private static final int CALLBACK_PORT = getFreePort();

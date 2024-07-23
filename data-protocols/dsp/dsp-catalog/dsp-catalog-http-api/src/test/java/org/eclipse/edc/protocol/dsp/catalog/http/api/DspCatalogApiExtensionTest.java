@@ -19,6 +19,7 @@ import org.eclipse.edc.connector.controlplane.services.spi.protocol.ProtocolVers
 import org.eclipse.edc.junit.extensions.DependencyInjectionExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.validator.spi.JsonObjectValidatorRegistry;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +32,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical(secrecy= {"ServiceExtension.initialize(ServiceExtensionContext):void"})
 class DspCatalogApiExtensionTest {
 
     private final JsonObjectValidatorRegistry validatorRegistry = mock();

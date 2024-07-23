@@ -30,6 +30,7 @@ import org.eclipse.edc.junit.extensions.DependencyInjectionExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.types.TypeManager;
 import org.eclipse.edc.transform.spi.TypeTransformerRegistry;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,6 +42,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical( secrecy= {"IdentityTrustTransformExtension.initialize(ServiceExtensionContext):void",
+		"initialize_assertTransformerRegistrations(IdentityTrustTransformExtension, ServiceExtensionContext):void",
+		"ServiceExtension.initialize(ServiceExtensionContext):void"})
 class IdentityTrustTransformExtensionTest {
 
     private final TypeTransformerRegistry mockRegistry = mock();

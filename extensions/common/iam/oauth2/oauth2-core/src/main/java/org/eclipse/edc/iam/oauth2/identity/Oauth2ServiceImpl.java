@@ -34,6 +34,8 @@ import org.eclipse.edc.token.spi.TokenDecoratorRegistry;
 import org.eclipse.edc.token.spi.TokenGenerationService;
 import org.eclipse.edc.token.spi.TokenValidationRulesRegistry;
 import org.eclipse.edc.token.spi.TokenValidationService;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.jetbrains.annotations.NotNull;
 
 import java.security.PrivateKey;
@@ -44,6 +46,14 @@ import static org.eclipse.edc.iam.oauth2.Oauth2ServiceExtension.OAUTH2_TOKEN_CON
 /**
  * Implements the OAuth2 client credentials flow and bearer token validation.
  */
+@Critical(secrecy= {"Oauth2ServiceImpl.verifyJwtToken(TokenRepresentation,VerificationContext):Result",
+		 "TokenValidationServiceImpl.validate(TokenRepresentation,PublicKeyResolver,List):Result" ,
+		 "TokenValidationService.validate(TokenRepresentation,PublicKeyResolver,List):Result",
+		 "ProtocolTokenValidatorImplTest.shouldVerifyToken():void",
+		 "LocalPublicKeyServiceImpl.resolveKey(String):Result",
+		 "ContractNegotiationEventDispatchTest.shouldDispatchEventsOnProviderContractNegotiationStateChanges" +
+		 "(EventRouter,RemoteMessageDispatcherRegistry,ContractNegotiationProtocolService,ContractDefinitionStore,PolicyDe" +
+		 "finitionStore,AssetIndex):void"})
 public class Oauth2ServiceImpl implements IdentityService {
 
     private static final String GRANT_TYPE = "client_credentials";
@@ -86,7 +96,8 @@ public class Oauth2ServiceImpl implements IdentityService {
                 .compose(client::requestToken);
     }
 
-    @Override
+    @Override 
+    @Secrecy 
     public Result<ClaimToken> verifyJwtToken(TokenRepresentation tokenRepresentation, VerificationContext context) {
         return tokenValidationService.validate(tokenRepresentation, publicKeyResolver, tokenValidationRuleRegistry.getRules(OAUTH2_TOKEN_CONTEXT));
     }

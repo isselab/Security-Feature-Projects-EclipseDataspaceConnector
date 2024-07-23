@@ -15,11 +15,14 @@
 package org.eclipse.edc.boot.system.injection.lifecycle;
 
 import org.eclipse.edc.spi.system.ServiceExtension;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 
 /**
  * Represents an {@link ServiceExtension}'s lifecycle phase where it's {@linkplain ServiceExtension#prepare()} method is
  * invoked by the {@link ExtensionLifecycleManager}.
  */
+@Critical(secrecy= {"LocalPublicKeyDefaultExtension.prepare():void"})
 public class PreparePhase extends Phase {
     protected PreparePhase(Phase other) {
         super(other);

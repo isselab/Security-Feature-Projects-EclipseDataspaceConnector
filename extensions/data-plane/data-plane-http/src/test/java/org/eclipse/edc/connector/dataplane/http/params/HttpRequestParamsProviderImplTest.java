@@ -23,6 +23,8 @@ import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.types.TypeManager;
 import org.eclipse.edc.spi.types.domain.DataAddress;
 import org.eclipse.edc.spi.types.domain.transfer.DataFlowStartMessage;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,10 +38,17 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@Critical(secrecy= {"Vault.resolveSecret(String):String",
+		"verifySecretFromAddressIsUsed():void",
+		 "verifySecretIsRetrievedFromVault():void",
+		 "verifySecretIsRetrievedFromVaultAsJson():void",
+		 "throwsExceptionIfNoSecretIsFoundInVaultAsJson():void",
+		 "InMemoryVault.resolveSecret(String):String"
+		})
 class HttpRequestParamsProviderImplTest {
 
     private static final TypeManager TYPE_MANAGER = new JacksonTypeManager();
-
+    
     private final Vault vault = mock(Vault.class);
     private HttpRequestParamsProvider provider;
 

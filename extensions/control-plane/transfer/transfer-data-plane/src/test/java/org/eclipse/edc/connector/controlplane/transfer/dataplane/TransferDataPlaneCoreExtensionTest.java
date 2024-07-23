@@ -25,6 +25,7 @@ import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.system.configuration.Config;
 import org.eclipse.edc.web.spi.WebService;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -44,6 +45,9 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical(secrecy= {"initialize(ServiceExtensionContext):void" ,
+		"Vault.resolveSecret(String):String",
+		"InMemoryVault.resolveSecret(String):String"})
 class TransferDataPlaneCoreExtensionTest {
 
     private static final String CONTROL_PLANE_API_CONTEXT = "control";

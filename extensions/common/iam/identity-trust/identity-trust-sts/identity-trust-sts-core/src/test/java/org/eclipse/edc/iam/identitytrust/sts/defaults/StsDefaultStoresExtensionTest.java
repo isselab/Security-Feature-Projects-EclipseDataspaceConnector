@@ -17,15 +17,18 @@ package org.eclipse.edc.iam.identitytrust.sts.defaults;
 import org.eclipse.edc.iam.identitytrust.sts.defaults.store.InMemoryStsClientStore;
 import org.eclipse.edc.junit.extensions.DependencyInjectionExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical(secrecy= {"ServiceExtension.initialize(ServiceExtensionContext):void",
+		"StsDefaultStoresExtensionTest.initialize(StsDefaultStoresExtension,ServiceExtensionContext):void"})
 public class StsDefaultStoresExtensionTest {
 
-    @Test
+    @Test 
     void initialize(StsDefaultStoresExtension extension, ServiceExtensionContext context) {
         extension.initialize(context);
 

@@ -34,7 +34,8 @@ import java.util.UUID;
  */
 @Provides(AuthenticationService.class)
 @Extension(value = TokenBasedAuthenticationExtension.NAME)
-@Critical(secrecy = {"TokenBasedAuthenticationService(String):void"})
+@Critical(secrecy = {"resolveSecret(String):String"
+		})
 public class TokenBasedAuthenticationExtension implements ServiceExtension {
 
     public static final String NAME = "Static token API Authentication";

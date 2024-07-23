@@ -43,7 +43,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(DependencyInjectionExtension.class)
-@Critical ( secrecy= {"initialize_shouldBeRegisteredAsManagementApiService(ServiceExtensionContext):void", "HttpWebhookExtension.initialize(ServiceExtensionContext):void"})
+@Critical ( secrecy= {"initialize_shouldBeRegisteredAsManagementApiService(ServiceExtensionContext):void", 
+		"HttpWebhookExtension.initialize(ServiceExtensionContext):void",
+		"ServiceExtension.initialize(ServiceExtensionContext):void"}) 
 class HttpWebhookExtensionTest {
 
     private HttpWebhookExtension extension;

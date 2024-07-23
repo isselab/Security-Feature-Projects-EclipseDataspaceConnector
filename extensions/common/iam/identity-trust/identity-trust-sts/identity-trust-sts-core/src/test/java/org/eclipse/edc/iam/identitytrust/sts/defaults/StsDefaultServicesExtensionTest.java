@@ -18,12 +18,16 @@ import org.eclipse.edc.iam.identitytrust.sts.defaults.service.StsClientServiceIm
 import org.eclipse.edc.iam.identitytrust.sts.defaults.service.StsClientTokenGeneratorServiceImpl;
 import org.eclipse.edc.junit.extensions.DependencyInjectionExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical(secrecy= {"ServiceExtension.initialize(ServiceExtensionContext):void",
+		"StsDefaultServicesExtensionTest.initialize(StsDefaultServicesExtension, ServiceExtensionContext):void",
+		})
 public class StsDefaultServicesExtensionTest {
 
     @Test

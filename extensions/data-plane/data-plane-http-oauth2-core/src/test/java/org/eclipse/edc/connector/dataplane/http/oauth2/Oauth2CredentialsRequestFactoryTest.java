@@ -27,6 +27,7 @@ import org.eclipse.edc.keys.spi.PrivateKeyResolver;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.security.Vault;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
@@ -48,7 +49,7 @@ import static org.eclipse.edc.iam.oauth2.spi.Oauth2DataAddressSchema.VALIDITY;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-
+@Critical (secrecy={"resolveSecret(String):String"})
 class Oauth2CredentialsRequestFactoryTest {
 
     private final Instant now = Instant.now();

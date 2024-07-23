@@ -24,16 +24,26 @@ import org.eclipse.edc.spi.result.AbstractResult;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.token.spi.TokenValidationRule;
 import org.eclipse.edc.token.spi.TokenValidationService;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 
+import java.security.PublicKey;
 import java.text.ParseException;
 import java.util.List;
-
+@Critical(secrecy={"TokenValidationServiceImpl.validate(TokenRepresentation,PublicKeyResolver, List):Result",
+		"resolveKey(String):Result",
+		"LocalPublicKeyServiceImpl.resolveKey(String):Result",
+		"AbstractPublicKeyResolver.resolveInternal(String):Result",
+		"TokenValidationService.validate(TokenRepresentation,PublicKeyResolver,List):Result",
+		"Oauth2ServiceImpl.verifyJwtToken(TokenRepresentation,VerificationContext):Result" ,
+		"IdentityAndTrustExtension.tokenValidationAction():TokenValidationAction" } )
 public class TokenValidationServiceImpl implements TokenValidationService {
 
     public TokenValidationServiceImpl() {
     }
 
     @Override
+    @Secrecy
     public Result<ClaimToken> validate(TokenRepresentation tokenRepresentation, PublicKeyResolver publicKeyResolver, List<TokenValidationRule> rules) {
         var token = tokenRepresentation.getToken();
         var additional = tokenRepresentation.getAdditional();

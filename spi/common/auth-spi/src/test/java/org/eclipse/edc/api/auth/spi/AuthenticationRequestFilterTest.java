@@ -31,7 +31,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-@Critical(secrecy = {"isAuthenticated(Map):boolean" , "AuthenticationRequestFilter.filter(ContainerRequestContext):void" , "AuthenticationRequestFilter.AuthenticationRequestFilter(AuthenticationService)"})
+@Critical(secrecy = {"authSrvMock:AuthenticationService",
+		"AuthenticationRequestFilter.filter(ContainerRequestContext):void" ,
+		"AuthenticationRequestFilter.AuthenticationRequestFilter(AuthenticationService)" ,
+		"AuthenticationService.isAuthenticated(Map):boolean",
+		"BasicAuthenticationService.isAuthenticated(Map):boolean"})
 class AuthenticationRequestFilterTest {
 	 
     private AuthenticationRequestFilter filter;

@@ -25,6 +25,7 @@ import org.eclipse.edc.spi.iam.TokenRepresentation;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.result.ServiceFailure;
 import org.eclipse.edc.spi.types.domain.message.RemoteMessage;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.Test;
 
 import static java.util.Collections.emptyMap;
@@ -37,7 +38,10 @@ import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
+@Critical(secrecy= {"shouldVerifyToken():void",
+		"Oauth2ServiceImpl.verifyJwtToken(TokenRepresentation, VerificationContext):Result" ,
+		"shouldReturnUnauthorized_whenTokenIsNotValid():void",
+		"shouldVerifyToken():void"})
 class ProtocolTokenValidatorImplTest {
 
     private final ParticipantAgentService agentService = mock();

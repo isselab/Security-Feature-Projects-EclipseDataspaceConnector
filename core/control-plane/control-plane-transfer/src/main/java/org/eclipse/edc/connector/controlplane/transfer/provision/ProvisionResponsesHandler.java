@@ -26,6 +26,7 @@ import org.eclipse.edc.spi.result.AbstractResult;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.types.TypeManager;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -43,6 +44,7 @@ import static org.eclipse.edc.connector.controlplane.transfer.spi.types.Transfer
  * Handles provisioning results, wrapping all the logic needed.
  * This component does not interact with the store.
  */
+@Critical( secrecy= {"storeSecret(String,String):Result"})
 public class ProvisionResponsesHandler implements ResponsesHandler<StatusResult<ProvisionResponse>> {
 
     private final TransferProcessObservable observable;

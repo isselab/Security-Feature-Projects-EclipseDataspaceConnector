@@ -22,6 +22,7 @@ import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.system.configuration.ConfigFactory;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,10 +38,18 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical(secrecy= {"resolveKey(String):Result", 
+		"localPublicKeyService_withValueConfig(LocalPublicKeyDefaultExtension, ServiceExtensionContext):void",
+		"LocalPublicKeyDefaultExtensionTest.localPublicKeyService_withPathConfig(LocalPublicKeyDefaultExtension,ServiceExtensionContext):void",
+		"localPublicKeyService_shouldRaiseException_withoutValueOrPath(LocalPublicKeyDefaultExtension , ServiceExtensionContext):void",
+		"resolveKey(String):Result",
+		"ServiceExtension.initialize(ServiceExtensionContext):void",
+		"LocalPublicKeyDefaultExtension.prepare():void",
+		"LocalPublicKeyDefaultExtension.prepare():void"})
 class LocalPublicKeyDefaultExtensionTest {
 
     private final KeyParserRegistry keyParserRegistry = mock();
-
+ 
     @BeforeEach
     void setUp(ServiceExtensionContext context) {
         context.registerService(KeyParserRegistry.class, keyParserRegistry);

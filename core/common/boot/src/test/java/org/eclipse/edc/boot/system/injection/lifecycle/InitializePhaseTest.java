@@ -27,7 +27,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-@Critical(secrecy = {"InitializePhase.initialize()","InitializePhase.InitializePhase(Injector,InjectionContainer,ServiceExtensionContext,Monitor)"})
+@Critical(secrecy = {"InitializePhase.initialize():void","InitializePhase.InitializePhase(Injector,InjectionContainer,ServiceExtensionContext,Monitor)"})
 class InitializePhaseTest extends PhaseTest {
 
     @Test

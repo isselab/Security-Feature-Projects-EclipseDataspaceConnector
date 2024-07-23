@@ -28,11 +28,14 @@ import org.eclipse.edc.spi.iam.VerificationContext;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.ServiceResult;
 import org.eclipse.edc.spi.types.domain.message.RemoteMessage;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 
 /**
  * Implementation of {@link ProtocolTokenValidator} which uses the {@link PolicyEngine} for extracting
  * the scope from the {@link Policy} within a scope
  */
+@Critical(secrecy= {"Oauth2ServiceImpl.verifyJwtToken(TokenRepresentation,VerificationContext):Result"})
 public class ProtocolTokenValidatorImpl implements ProtocolTokenValidator {
 
     private final IdentityService identityService;

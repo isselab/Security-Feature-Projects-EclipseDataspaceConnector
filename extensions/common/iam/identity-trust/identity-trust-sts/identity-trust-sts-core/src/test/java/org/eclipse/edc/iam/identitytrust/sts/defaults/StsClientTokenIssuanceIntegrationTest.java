@@ -31,6 +31,7 @@ import org.eclipse.edc.keys.spi.PrivateKeyResolver;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.token.JwtGenerationService;
 import org.eclipse.edc.transaction.spi.NoopTransactionContext;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -52,6 +53,10 @@ import static org.eclipse.edc.jwt.spi.JwtRegisteredClaimNames.CLIENT_ID;
 import static org.mockito.Mockito.mock;
 
 @ComponentTest
+@Critical (secrecy= { "storeSecret(String,String):Result",
+"resolveSecret(String):String" })
+
+
 public class StsClientTokenIssuanceIntegrationTest {
 
     private final InMemoryStsClientStore clientStore = new InMemoryStsClientStore();

@@ -31,7 +31,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(DependencyInjectionExtension.class)
-@Critical(secrecy = {"TokenBasedAuthenticationExtension.initialize(ServiceExtensionContext)", "TokenBasedAuthenticationService(String)"})
+@Critical(secrecy = {"resolveSecret(String):String",
+		"TokenBasedAuthenticationExtension.initialize(ServiceExtensionContext):void",
+		"ServiceExtension.initialize(ServiceExtensionContext):void",
+		"testPrimaryMethod_loadKeyFromVault(ServiceExtensionContext, TokenBasedAuthenticationExtension):void"})
 public class TokenBasedAuthenticationExtensionTest {
 
     private static final String AUTH_SETTING_APIKEY = "edc.api.auth.key";

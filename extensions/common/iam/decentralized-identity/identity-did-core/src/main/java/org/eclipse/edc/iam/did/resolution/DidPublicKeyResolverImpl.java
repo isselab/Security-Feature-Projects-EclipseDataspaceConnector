@@ -23,6 +23,8 @@ import org.eclipse.edc.iam.did.spi.resolution.DidResolverRegistry;
 import org.eclipse.edc.keys.AbstractPublicKeyResolver;
 import org.eclipse.edc.keys.spi.KeyParserRegistry;
 import org.eclipse.edc.spi.result.Result;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.ParseException;
@@ -35,6 +37,8 @@ import static java.lang.String.format;
 import static java.util.Collections.emptyList;
 import static org.eclipse.edc.iam.did.spi.document.DidConstants.ALLOWED_VERIFICATION_TYPES;
 
+// &begin[use_PublicKeyResolver]
+@Critical(secrecy = "AbstractPublicKeyResolver.resolveKey(String):Result")
 public class DidPublicKeyResolverImpl extends AbstractPublicKeyResolver implements DidPublicKeyResolver {
 
     /**
@@ -53,6 +57,7 @@ public class DidPublicKeyResolverImpl extends AbstractPublicKeyResolver implemen
     }
 
     @Override
+    @Secrecy
     protected Result<String> resolveInternal(String id) {
         if (id == null) {
             return Result.failure("The provided DID is null");
@@ -133,3 +138,4 @@ public class DidPublicKeyResolverImpl extends AbstractPublicKeyResolver implemen
         };
     }
 }
+// &end[]

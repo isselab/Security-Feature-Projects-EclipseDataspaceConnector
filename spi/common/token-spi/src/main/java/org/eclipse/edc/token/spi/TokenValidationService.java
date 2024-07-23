@@ -18,6 +18,8 @@ import org.eclipse.edc.keys.spi.PublicKeyResolver;
 import org.eclipse.edc.spi.iam.ClaimToken;
 import org.eclipse.edc.spi.iam.TokenRepresentation;
 import org.eclipse.edc.spi.result.Result;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
@@ -27,6 +29,11 @@ import java.util.List;
  * Interface for validating token.
  */
 @FunctionalInterface
+@Critical (secrecy= { "TokenValidationServiceImpl.validate(TokenRepresentation,PublicKeyResolver,List):Result",
+		"TokenValidationService.validate(TokenRepresentation,PublicKeyResolver,List):Result",
+		"LocalPublicKeyServiceImpl.resolveKey(String):Result",
+		"TokenValidationService.validate(TokenRepresentation,PublicKeyResolver,TokenValidationRule[]):Result",
+		"TokenValidationService.validate(String,PublicKeyResolver,TokenValidationRule[]):Result"})
 public interface TokenValidationService {
     /**
      * Validates the token and offers possibility for additional information for validations.
@@ -36,6 +43,7 @@ public interface TokenValidationService {
      * @param rules               token validation rules that apply to the token
      * @return Result of the validation.
      */
+	@Secrecy
     default Result<ClaimToken> validate(TokenRepresentation tokenRepresentation, PublicKeyResolver publicKeyResolver, TokenValidationRule... rules) {
         return validate(tokenRepresentation, publicKeyResolver, Arrays.asList(rules));
     }
@@ -48,6 +56,7 @@ public interface TokenValidationService {
      * @param rules               token validation rules that apply to the token. Assume to be unmodifiable.
      * @return Result of the validation.
      */
+	@Secrecy
     Result<ClaimToken> validate(TokenRepresentation tokenRepresentation, PublicKeyResolver publicKeyResolver, List<TokenValidationRule> rules);
 
     /**
@@ -58,6 +67,7 @@ public interface TokenValidationService {
      * @param rules             token validation rules that apply to the token. Assume to be unmodifiable.
      * @return Result of the validation.
      */
+    @Secrecy
     default Result<ClaimToken> validate(String token, PublicKeyResolver publicKeyResolver, List<TokenValidationRule> rules) {
         var tokenRepresentation = TokenRepresentation.Builder.newInstance()
                 .token(token)
@@ -73,6 +83,7 @@ public interface TokenValidationService {
      * @param rules             token validation rules that apply to the token
      * @return Result of the validation.
      */
+    @Secrecy
     default Result<ClaimToken> validate(@NotNull String token, PublicKeyResolver publicKeyResolver, TokenValidationRule... rules) {
         var tokenRepresentation = TokenRepresentation.Builder.newInstance()
                 .token(token)

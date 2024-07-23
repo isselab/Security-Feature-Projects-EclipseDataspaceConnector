@@ -49,6 +49,7 @@ import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.types.domain.DataAddress;
 import org.eclipse.edc.validator.spi.DataAddressValidatorRegistry;
 import org.eclipse.edc.validator.spi.ValidationResult;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -74,6 +75,7 @@ import static org.mockito.Mockito.when;
 
 @ComponentTest
 @ExtendWith(EdcExtension.class)
+@Critical(secrecy= {"Oauth2ServiceImpl.verifyJwtToken(TokenRepresentation,VerificationContext):Result"})
 public class HttpProvisionerExtensionEndToEndTest {
     private static final String ASSET_ID = "assetId";
     private static final String CONTRACT_ID = UUID.randomUUID().toString();

@@ -44,6 +44,7 @@ import org.eclipse.edc.spi.protocol.ProtocolWebhook;
 import org.eclipse.edc.spi.response.StatusResult;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.types.domain.DataAddress;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,6 +67,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(EdcExtension.class)
+@Critical (secrecy = {"Oauth2ServiceImpl.verifyJwtToken(TokenRepresentation,VerificationContext):Result",
+		"shouldDispatchEventsOnProviderContractNegotiationStateChanges(EventRouter,"+
+                "RemoteMessageDispatcherRegistry,"+
+                "ContractNegotiationProtocolService,"+
+                "ContractDefinitionStore,"+
+                "PolicyDefinitionStore,"+
+                "AssetIndex):void"} )
 class ContractNegotiationEventDispatchTest {
     private static final String CONSUMER = "consumer";
 

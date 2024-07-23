@@ -20,12 +20,14 @@ import org.eclipse.edc.spi.agent.ParticipantAgent;
 import org.eclipse.edc.spi.iam.TokenRepresentation;
 import org.eclipse.edc.spi.result.ServiceResult;
 import org.eclipse.edc.spi.types.domain.message.RemoteMessage;
+import org.gravity.security.annotations.requirements.Critical;
 
 /**
  * Token validator to be used in protocol layer for verifying the token according the
  * input policy and policy scope
  */
 @ExtensionPoint
+@Critical(secrecy= {"ProtocolTokenValidatorImpl.verify(TokenRepresentation,String,Policy,RemoteMessage):ServiceResult"})
 public interface ProtocolTokenValidator {
 
     /**

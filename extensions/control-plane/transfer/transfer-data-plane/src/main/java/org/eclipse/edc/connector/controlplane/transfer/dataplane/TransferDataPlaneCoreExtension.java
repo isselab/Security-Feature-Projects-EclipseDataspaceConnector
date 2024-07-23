@@ -32,6 +32,7 @@ import org.eclipse.edc.keys.spi.PrivateKeyResolver;
 import org.eclipse.edc.runtime.metamodel.annotation.Extension;
 import org.eclipse.edc.runtime.metamodel.annotation.Inject;
 import org.eclipse.edc.runtime.metamodel.annotation.Setting;
+import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.types.TypeManager;
@@ -41,13 +42,23 @@ import org.eclipse.edc.token.spi.TokenValidationService;
 import org.eclipse.edc.validator.spi.DataAddressValidatorRegistry;
 import org.eclipse.edc.validator.spi.ValidationResult;
 import org.eclipse.edc.web.spi.WebService;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.jetbrains.annotations.NotNull;
 
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.time.Clock;
 import java.util.function.Supplier;
 
 @Extension(value = TransferDataPlaneCoreExtension.NAME)
+@Critical (secrecy= {"AbstractPublicKeyResolver.resolveKey(String):Result<>",
+		"privateKeyResolver:PrivateKeyResolver",
+		"LocalPublicKeyServiceImpl.resolveKey(String):Result",
+		"initialize(ServiceExtensionContext):Result<>",
+		"PublicKeyResolver.resolveKey(String):Result<>",
+		"TransferDataPlaneCoreExtension.getPrivateKeySupplier(ServiceExtensionContext,String):Supplier",
+		 "PublicKeyResolver.resolveKey(String):Result"})
 public class TransferDataPlaneCoreExtension implements ServiceExtension {
 
     @Setting(value = "Alias of private key used for signing tokens, retrieved from private key resolver")
@@ -93,6 +104,7 @@ public class TransferDataPlaneCoreExtension implements ServiceExtension {
     private LocalPublicKeyService publicKeyService;
 
     @Inject
+    @Secrecy
     private PrivateKeyResolver privateKeyResolver;
 
     @Inject
@@ -110,6 +122,7 @@ public class TransferDataPlaneCoreExtension implements ServiceExtension {
     }
 
     @Override
+    @Secrecy
     public void initialize(ServiceExtensionContext context) {
         var publicKeyAlias = context.getSetting(TOKEN_VERIFIER_PUBLIC_KEY_ALIAS, null);
         var privateKeyAlias = context.getSetting(TOKEN_SIGNER_PRIVATE_KEY_ALIAS, null);
@@ -132,6 +145,7 @@ public class TransferDataPlaneCoreExtension implements ServiceExtension {
     }
 
     @NotNull
+    @Secrecy
     private Supplier<PrivateKey> getPrivateKeySupplier(ServiceExtensionContext context, String privateKeyAlias) {
         return () -> privateKeyResolver.resolvePrivateKey(privateKeyAlias)
                 .orElse(f -> {

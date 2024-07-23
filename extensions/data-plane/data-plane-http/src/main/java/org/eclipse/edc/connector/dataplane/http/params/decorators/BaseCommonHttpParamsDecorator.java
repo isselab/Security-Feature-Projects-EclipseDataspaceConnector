@@ -21,12 +21,15 @@ import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.types.TypeManager;
 import org.eclipse.edc.spi.types.domain.transfer.DataFlowStartMessage;
+import org.gravity.security.annotations.requirements.Critical;
 
 import java.util.Map;
 import java.util.Optional;
 
 import static java.lang.String.format;
 
+@Critical (secrecy= { "Vault.resolveSecret(String):String",
+		"InMemoryVault.resolveSecret(String):String"})
 public class BaseCommonHttpParamsDecorator implements HttpParamsDecorator {
 
     private final Vault vault;

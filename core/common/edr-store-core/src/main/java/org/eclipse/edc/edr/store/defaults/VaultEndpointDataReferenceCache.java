@@ -21,12 +21,15 @@ import org.eclipse.edc.spi.persistence.EdcPersistenceException;
 import org.eclipse.edc.spi.result.StoreResult;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.types.domain.DataAddress;
+import org.gravity.security.annotations.requirements.Critical;
 
 import java.util.Optional;
 
 /**
  * Vault implementation of {@link EndpointDataReferenceCache}
  */
+@Critical (secrecy= {"resolveSecret(String):String" ,
+		"storeSecret(String,String):Result"})
 public class VaultEndpointDataReferenceCache implements EndpointDataReferenceCache {
 
     public static final String SEPARATOR = "--";

@@ -17,6 +17,7 @@ package org.eclipse.edc.vault.hashicorp;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.vault.hashicorp.client.HashicorpVaultClient;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -28,6 +29,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@Critical( secrecy={"Vault.storeSecret(String,String):Result",
+		"getSecretSuccess():void" ,
+		"getSecretFailure():void" ,
+		"Vault.resolveSecret(String):String"})
 class HashicorpVaultTest {
     private static final String KEY = "key";
 

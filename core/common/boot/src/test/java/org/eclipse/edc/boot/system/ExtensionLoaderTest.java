@@ -57,6 +57,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @Critical( secrecy= { 
+		"LocalPublicKeyServiceImpl.resolveKey(String):Result",
 		"bootServiceExtensions(List<InjectionContainer<ServiceExtension>>, ServiceExtensionContext):void"})
 class ExtensionLoaderTest {
 

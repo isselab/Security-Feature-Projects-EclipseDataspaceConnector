@@ -28,12 +28,12 @@ import static java.lang.String.format;
  * Represents an {@link ServiceExtension}'s lifecycle phase where it's {@linkplain ServiceExtension#initialize(ServiceExtensionContext)} method is invoked by the
  * {@link ExtensionLifecycleManager}.
  */
-@Critical(secrecy = {"initialize(ServiceExtensionContext)"})
+@Critical(secrecy = {"initialize():void"})
 public class InitializePhase extends Phase {
-    @Secrecy
+    @Secrecy 
 	protected InitializePhase(Injector injector, InjectionContainer<ServiceExtension> container, ServiceExtensionContext context, Monitor monitor) {
         super(injector, container, context, monitor);
-    }
+    } 
     @Secrecy
     protected void initialize() {
         // call initialize

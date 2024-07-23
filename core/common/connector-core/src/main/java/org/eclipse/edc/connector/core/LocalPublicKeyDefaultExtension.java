@@ -28,6 +28,8 @@ import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.system.configuration.Config;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -41,6 +43,10 @@ import static org.eclipse.edc.connector.core.SecurityDefaultServicesExtension.NA
 
 @Extension(value = NAME)
 @Provides(LocalPublicKeyService.class)
+@Critical(secrecy={"addRawKey(String, String):Result",
+		"LocalPublicKeyServiceImpl.addRawKey(String,String):Result",
+		"LocalPublicKeyServiceImpl.addRawKey(String,String):Result",
+		"PreparePhase.prepare():void"})
 public class LocalPublicKeyDefaultExtension implements ServiceExtension {
 
     public static final String NAME = "Local Public Key Default Extension";
@@ -85,6 +91,7 @@ public class LocalPublicKeyDefaultExtension implements ServiceExtension {
     }
 
     @Override
+    @Secrecy
     public void prepare() {
         if (keysConfiguration != null) {
             var result = keysConfiguration.partition().map(this::readPublicKey)

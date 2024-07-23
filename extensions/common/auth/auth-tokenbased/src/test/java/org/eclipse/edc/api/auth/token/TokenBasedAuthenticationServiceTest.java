@@ -29,7 +29,6 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-@Critical(secrecy = {"TokenBasedAuthenticationService.isAuthenticated(Map):boolean", "TokenBasedAuthenticationService(String)"})
 class TokenBasedAuthenticationServiceTest {
 
     private static final String TEST_API_KEY = "test-key";

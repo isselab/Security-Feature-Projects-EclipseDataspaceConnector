@@ -24,6 +24,7 @@ import org.eclipse.edc.spi.types.domain.DataAddress;
 import org.eclipse.edc.token.spi.TokenValidationService;
 import org.eclipse.edc.web.spi.exception.InvalidRequestException;
 import org.eclipse.edc.web.spi.exception.NotAuthorizedException;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,6 +41,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@Critical (secrecy= {"TokenValidationService.validate(String,PublicKeyResolver,TokenValidationRule[]):Result"})
 class ConsumerPullTransferTokenValidationApiControllerTest {
 
     private static final TypeManager TYPE_MANAGER = new JacksonTypeManager();

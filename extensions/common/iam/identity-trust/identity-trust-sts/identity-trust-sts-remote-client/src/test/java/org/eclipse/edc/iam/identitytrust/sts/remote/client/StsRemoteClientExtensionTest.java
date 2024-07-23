@@ -18,6 +18,7 @@ import org.eclipse.edc.iam.identitytrust.sts.remote.RemoteSecureTokenService;
 import org.eclipse.edc.iam.identitytrust.sts.remote.StsRemoteClientConfiguration;
 import org.eclipse.edc.junit.extensions.DependencyInjectionExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,6 +26,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical(secrecy= {"ServiceExtension.initialize(ServiceExtensionContext):void",
+		"StsRemoteClientExtensionTest.initialize(StsRemoteClientExtension, ServiceExtensionContext):void"})
 public class StsRemoteClientExtensionTest {
 
     private final StsRemoteClientConfiguration configuration = new StsRemoteClientConfiguration("id", "secret", "url");

@@ -40,6 +40,7 @@ import org.eclipse.edc.verifiablecredentials.jwt.JwtPresentationVerifier;
 import org.eclipse.edc.verifiablecredentials.linkeddata.LdpCreationUtils;
 import org.eclipse.edc.verifiablecredentials.linkeddata.LdpVerifier;
 import org.eclipse.edc.verifiablecredentials.linkeddata.TestData;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -75,6 +76,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
+@Critical(secrecy= {"AbstractPublicKeyResolver.resolveKey(String):Result",
+		"PublicKeyResolver.resolveKey(String):Result",
+		"LocalPublicKeyServiceImpl.resolveKey(String):Result",
+		"TokenValidationService.validate(String,PublicKeyResolver,List):Result",
+		"MultiFormatPresentationVerifierTest.setup():void"})
 class MultiFormatPresentationVerifierTest {
     public static final String INVALID_SIGNATURE = "Invalid signature";
     private static final SignatureSuiteRegistry SIGNATURE_SUITE_REGISTRY = mock();

@@ -22,6 +22,7 @@ import org.eclipse.edc.policy.model.Policy;
 import org.eclipse.edc.spi.iam.IdentityService;
 import org.eclipse.edc.spi.iam.TokenParameters;
 import org.eclipse.edc.spi.iam.VerificationContext;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,6 +38,7 @@ import static org.eclipse.edc.junit.testfixtures.TestUtils.findBuildRoot;
 
 @ExtendWith(EdcExtension.class)
 @ComponentTest
+@Critical(secrecy= {"Oauth2ServiceImpl.verifyJwtToken(TokenRepresentation,VerificationContext):Result"})
 class DapsIntegrationTest {
 
     private static final String AUDIENCE_IDS_CONNECTORS_ALL = "idsc:IDS_CONNECTORS_ALL";

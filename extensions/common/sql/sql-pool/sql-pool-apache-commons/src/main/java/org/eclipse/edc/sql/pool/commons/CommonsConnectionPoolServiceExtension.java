@@ -27,6 +27,7 @@ import org.eclipse.edc.sql.ConnectionFactory;
 import org.eclipse.edc.sql.datasource.ConnectionFactoryDataSource;
 import org.eclipse.edc.sql.datasource.ConnectionPoolDataSource;
 import org.eclipse.edc.transaction.datasource.spi.DataSourceRegistry;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,6 +44,8 @@ import javax.sql.DataSource;
 import static java.util.Optional.ofNullable;
 
 @Extension(value = CommonsConnectionPoolServiceExtension.NAME)
+@Critical(secrecy= {"Vault.resolveSecret(String):String",
+		"InMemoryVault.resolveSecret(String):String"})
 public class CommonsConnectionPoolServiceExtension implements ServiceExtension {
 
     public static final String NAME = "Commons Connection Pool";

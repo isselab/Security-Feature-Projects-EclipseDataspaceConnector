@@ -29,6 +29,8 @@ import org.eclipse.edc.spi.system.MonitorExtension;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.telemetry.Telemetry;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -38,6 +40,11 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+@Critical( secrecy= {"ExtensionLoader.bootServiceExtensions(List<InjectionContainer<ServiceExtension>>,"
+		+ "ServiceExtensionContext): void" , 
+		"ExtensionLifecycleManager.initialize(InitializePhase):RegistrationPhase",
+		"ExtensionLifecycleManager.inject():InitializePhase"
+		})
 public class ExtensionLoader {
 
     private final ServiceLocator serviceLocator;
@@ -45,10 +52,11 @@ public class ExtensionLoader {
     public ExtensionLoader(ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
-
+   
     /**
      * Convenience method for loading service extensions.
-     */
+     */   
+    @Secrecy
     public static void bootServiceExtensions(List<InjectionContainer<ServiceExtension>> containers, ServiceExtensionContext context) {
         //construct a list of default providers, which are invoked, if a particular service is not present in the context
         var defaultServices = new HashMap<Class<?>, Supplier<Object>>();

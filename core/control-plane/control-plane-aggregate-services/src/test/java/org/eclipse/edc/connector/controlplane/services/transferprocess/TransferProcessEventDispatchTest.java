@@ -55,6 +55,7 @@ import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.types.domain.DataAddress;
 import org.eclipse.edc.validator.spi.DataAddressValidatorRegistry;
 import org.eclipse.edc.validator.spi.ValidationResult;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -83,6 +84,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(EdcExtension.class)
+@Critical( secrecy= {"Oauth2ServiceImpl.verifyJwtToken(TokenRepresentation,VerificationContext):Result" ,
+		"shouldDispatchEventsOnTransferProcessStateChanges(TransferProcessService service,"+
+                "TransferProcessProtocolService protocolService,"+
+                "EventRouter,"+
+                "RemoteMessageDispatcherRegistry,"+
+                "PolicyArchive,"+
+                "ContractNegotiationStore,"+
+                "ParticipantAgentService):void"})
 public class TransferProcessEventDispatchTest {
 
     public static final Duration TIMEOUT = Duration.ofSeconds(30);

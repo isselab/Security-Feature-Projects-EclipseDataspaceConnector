@@ -21,6 +21,7 @@ import org.eclipse.edc.spi.system.health.HealthCheckService;
 import org.eclipse.edc.spi.system.health.LivenessProvider;
 import org.eclipse.edc.spi.system.health.ReadinessProvider;
 import org.eclipse.edc.web.spi.WebService;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +32,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical(secrecy= {"ServiceExtension.initialize(ServiceExtensionContext):void"})
 class ObservabilityApiExtensionTest {
 
     private final WebService webService = mock();

@@ -30,6 +30,7 @@ import org.eclipse.edc.token.TokenValidationServiceImpl;
 import org.eclipse.edc.token.spi.TokenValidationRulesRegistry;
 import org.eclipse.edc.token.spi.TokenValidationService;
 import org.eclipse.edc.verifiablecredentials.jwt.rules.HasSubjectRule;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -53,6 +54,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ComponentTest
+@Critical(secrecy= {"AbstractPublicKeyResolver.resolveKey(String):Result",
+		"PublicKeyResolver.resolveKey(String):Result" ,
+		"AbstractPublicKeyResolver.resolveInternal(String):Result",
+		"LocalPublicKeyServiceImpl.resolveKey(String):Result",
+		"JwtPresentationVerifierTest.setup():void" })
 class JwtPresentationVerifierTest {
 
     private final PublicKeyResolver publicKeyResolverMock = mock();

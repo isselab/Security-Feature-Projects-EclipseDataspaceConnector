@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-//&begin[feat_token-auth]
+//&begin[feat_token_auth]
 @Critical(secrecy = {"hardCodedApiKey:String" , "TokenBasedAuthenticationService.checkApiKeyValid(List):boolean"}, integrity = {"hardCodedApiKey:String"})
 public class TokenBasedAuthenticationService implements AuthenticationService {
     

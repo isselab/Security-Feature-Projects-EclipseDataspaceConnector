@@ -28,6 +28,7 @@ import org.eclipse.edc.spi.types.domain.DataAddress;
 import org.eclipse.edc.token.spi.TokenDecorator;
 import org.eclipse.edc.token.spi.TokenGenerationService;
 import org.eclipse.edc.token.spi.TokenValidationService;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -48,6 +49,9 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+@Critical (secrecy= {"resolve():void" ,
+		"TokenValidationService.validate(String,PublicKeyResolver,List):Result",
+		})
 class DefaultDataPlaneAccessTokenServiceImplTest {
 
     private static final Pattern UUID_PATTERN = Pattern.compile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$");

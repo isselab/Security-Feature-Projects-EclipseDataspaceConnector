@@ -26,6 +26,8 @@ import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.web.jetty.JettyConfiguration;
 import org.eclipse.edc.web.jetty.JettyService;
 import org.eclipse.edc.web.jetty.PortMapping;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +47,10 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-
+@Critical(secrecy = {"verifyFilterForOneContextPath():void" ,
+		"verifyFilterForOneContextPath():void" , 
+		"filter(ContainerRequestContext):void" ,
+		"ContainerFilteringStage.apply(RequestProcessingContext):Stage$Continuation"})
 public class JerseyRestServiceTest {
     private final int httpPort = getFreePort();
     private JerseyRestService jerseyRestService;
@@ -53,7 +58,7 @@ public class JerseyRestServiceTest {
     private final Monitor monitor = mock(Monitor.class);
 
     @AfterEach
-    void teardown() {
+    void teardown() { 
         jettyService.shutdown();
     }
 
@@ -119,6 +124,7 @@ public class JerseyRestServiceTest {
                 .hasRootCauseInstanceOf(IllegalStateException.class);
     }
 
+   
     @Test
     @DisplayName("Verifies that a request filter only fires for the desired path/context")
     void verifyFilterForOneContextPath() throws IOException {
@@ -260,6 +266,7 @@ public class JerseyRestServiceTest {
     public static class FooRequestFilter implements ContainerRequestFilter {
 
         @Override
+        
         public void filter(ContainerRequestContext requestContext) {
 
         }

@@ -32,7 +32,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-@Critical(secrecy = {"isAuthenticated(Map):boolean" ,"isAuthorized(String):void" ,"isAuthorized_headerNotPresent():void"})
+@Critical(secrecy = {"setUp():void","isAuthenticated(Map):boolean" ,
+		"isAuthorized(String):void" ,
+		"isAuthorized_headerNotPresent():void",
+		"Vault.resolveSecret(String):String",
+		"InMemoryVault.resolveSecret(String):String"})
 class BasicAuthenticationServiceTest {
 
     private static final List<BasicAuthenticationExtension.ConfigCredentials> TEST_CREDENTIALS = List.of(

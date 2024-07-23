@@ -19,6 +19,7 @@ import org.eclipse.edc.iam.identitytrust.sts.spi.model.StsClient;
 import org.eclipse.edc.iam.identitytrust.sts.spi.store.StsClientStore;
 import org.eclipse.edc.junit.extensions.EdcRuntimeExtension;
 import org.eclipse.edc.spi.security.Vault;
+import org.gravity.security.annotations.requirements.Critical;
 
 import java.text.ParseException;
 import java.util.Map;
@@ -30,6 +31,7 @@ import static org.eclipse.edc.iam.identitytrust.sts.spi.store.fixtures.TestFunct
 /**
  * Base class for STS E2E tests
  */
+@Critical (secrecy="storeSecret(String,String):Result")
 public abstract class StsEndToEndTestBase {
 
     protected abstract EdcRuntimeExtension getRuntime();

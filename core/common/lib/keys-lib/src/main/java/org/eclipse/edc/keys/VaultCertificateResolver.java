@@ -18,6 +18,7 @@ package org.eclipse.edc.keys;
 import org.eclipse.edc.keys.spi.CertificateResolver;
 import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.spi.security.Vault;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -26,7 +27,7 @@ import java.security.GeneralSecurityException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
-
+@Critical(secrecy={"resolveSecret(String):String"})
 public class VaultCertificateResolver implements CertificateResolver {
     public static final String HEADER = "-----BEGIN CERTIFICATE-----";
     public static final String FOOTER = "-----END CERTIFICATE-----";

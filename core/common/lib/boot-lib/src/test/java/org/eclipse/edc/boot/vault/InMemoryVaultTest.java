@@ -15,12 +15,15 @@
 package org.eclipse.edc.boot.vault;
 
 import org.eclipse.edc.spi.monitor.Monitor;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
+@Critical (secrecy= { "storeSecret(String,String):Result",
+		"resolveSecret(String):String"})
 class InMemoryVaultTest {
 
     private InMemoryVault vault;

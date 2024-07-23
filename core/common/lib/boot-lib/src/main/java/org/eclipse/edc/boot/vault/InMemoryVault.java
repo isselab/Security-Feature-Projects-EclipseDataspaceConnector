@@ -17,20 +17,33 @@ package org.eclipse.edc.boot.vault;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.security.Vault;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Integrity;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Critical (secrecy={"Vault.resolveSecret(String):String",
+"Vault.storeSecret(String,String):Result",
+"HttpRequestParamsProviderImplTest.verifySecretIsRetrievedFromVaultAsJson():void",
+"BasicAuthenticationServiceTest.setUp():void",
+"BaseCommonHttpParamsDecorator.extractAuthCode(String,HttpDataAddress):String",
+"LocalPublicKeyServiceImpl.resolveFromVault(String):Optional"},
+
+integrity={"secrets:Map"}) 
 public class InMemoryVault implements Vault {
+	@Integrity
     private final Map<String, String> secrets = new ConcurrentHashMap<>();
     private final Monitor monitor;
 
-    public InMemoryVault(Monitor monitor) {
+    public InMemoryVault(Monitor monitor) { 
         this.monitor = monitor;
     }
-
+ 
     @Override
+    @Secrecy
     public @Nullable String resolveSecret(String s) {
         monitor.debug("Resolving secret " + s);
         if (s == null) {
@@ -39,8 +52,9 @@ public class InMemoryVault implements Vault {
         }
         return secrets.getOrDefault(s, null);
     }
-
+ 
     @Override
+    @Secrecy
     public Result<Void> storeSecret(String s, String s1) {
         monitor.debug("Storing secret " + s);
         secrets.put(s, s1);

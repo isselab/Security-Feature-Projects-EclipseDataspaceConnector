@@ -19,6 +19,7 @@ import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.system.configuration.Config;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -29,6 +30,8 @@ import java.util.Optional;
  * <p>
  * Note that storing private key material in the config is <strong>NOT SECURE</strong> and should be avoided in production scenarios!
  */
+@Critical (secrecy={"Vault.resolveSecret(String):String" ,
+		"InMemoryVault.resolveSecret(String):String"})
 public class VaultPrivateKeyResolver extends AbstractPrivateKeyResolver {
 
     private final Vault vault;

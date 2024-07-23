@@ -28,11 +28,13 @@ import org.eclipse.edc.spi.types.domain.DataAddress;
 import org.eclipse.edc.token.spi.TokenValidationService;
 import org.eclipse.edc.web.spi.exception.InvalidRequestException;
 import org.eclipse.edc.web.spi.exception.NotAuthorizedException;
+import org.gravity.security.annotations.requirements.Critical;
 
 import static java.lang.String.format;
 import static org.eclipse.edc.connector.controlplane.transfer.dataplane.spi.TransferDataPlaneConstants.DATA_ADDRESS;
 
 @Path("/token")
+@Critical(secrecy ={"TokenValidationService.validate(String,PublicKeyResolver,TokenValidationRule[]):Result"})
 public class ConsumerPullTransferTokenValidationApiController implements ConsumerPullTransferTokenValidationApi {
     private final TokenValidationService service;
     private final DataEncrypter dataEncrypter;

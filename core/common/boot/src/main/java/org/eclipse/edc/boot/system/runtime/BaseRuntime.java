@@ -29,6 +29,8 @@ import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.system.health.HealthCheckResult;
 import org.eclipse.edc.spi.system.health.HealthCheckService;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -50,6 +52,7 @@ import static java.lang.String.format;
  *     <li>{@link BaseRuntime#onError(Exception)}: receives any Exception that was raised during initialization</li>
  * </ul>
  */
+@Critical ( secrecy= { "BaseRuntime.boot(boolean):void","bootExtensions(ServiceExtensionContext,List):void" , "main(String[]):void" , "BaseRuntime.boot():void" , "ExtensionLoader.bootServiceExtensions(List,ServiceExtensionContext):void"})
 public class BaseRuntime {
 
     private static String[] programArgs = new String[0];
@@ -64,17 +67,18 @@ public class BaseRuntime {
     protected BaseRuntime(ServiceLocator serviceLocator) {
         extensionLoader = new ExtensionLoader(serviceLocator);
     }
-
+    @Secrecy
     public static void main(String[] args) {
         programArgs = args;
         var runtime = new BaseRuntime();
         runtime.boot();
     }
-
+ 
     /**
      * Main entry point to runtime initialization. Calls all methods
      * and sets up a context shutdown hook at runtime shutdown.
      */
+    @Secrecy
     public void boot() {
         boot(true);
     }
@@ -144,6 +148,7 @@ public class BaseRuntime {
      * @param context           The {@code ServiceExtensionContext} that is used in this runtime.
      * @param serviceExtensions a list of extensions
      */
+    @Secrecy
     protected void bootExtensions(ServiceExtensionContext context, List<InjectionContainer<ServiceExtension>> serviceExtensions) {
         ExtensionLoader.bootServiceExtensions(serviceExtensions, context);
     }
@@ -184,7 +189,7 @@ public class BaseRuntime {
     protected Monitor createMonitor() {
         return ExtensionLoader.loadMonitor(programArgs);
     }
-
+    @Secrecy
     private void boot(boolean addShutdownHook) {
         monitor = createMonitor();
         var context = createServiceExtensionContext();

@@ -22,6 +22,7 @@ import org.eclipse.edc.runtime.metamodel.annotation.Setting;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.gravity.security.annotations.requirements.Critical;
 
 import java.util.Objects;
 
@@ -31,6 +32,7 @@ import static java.lang.String.format;
  * Configuration Extension for the STS OAuth2 client
  */
 @Extension(StsRemoteClientConfigurationExtension.NAME)
+@Critical(secrecy="resolveSecret(String):String") 
 public class StsRemoteClientConfigurationExtension implements ServiceExtension {
 
     @Setting(value = "STS OAuth2 endpoint for requesting a token")

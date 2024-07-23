@@ -20,6 +20,7 @@ import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.system.configuration.ConfigFactory;
 import org.eclipse.edc.transaction.datasource.spi.DataSourceRegistry;
 import org.eclipse.edc.transaction.spi.TransactionContext;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -39,6 +40,7 @@ import static org.mockito.Mockito.when;
 /**
  * Verifies transaction setup by executing committed and rollback transactions against an in-memory H2 database.
  */
+@Critical ( secrecy= {"ServiceExtension.initialize(ServiceExtensionContext):void"})
 class AtomikosTransactionExtensionTest {
     AtomikosTransactionExtension extension;
 

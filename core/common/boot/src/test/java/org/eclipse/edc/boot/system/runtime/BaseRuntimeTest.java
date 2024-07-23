@@ -22,6 +22,7 @@ import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.system.health.HealthCheckService;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 
@@ -40,6 +41,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@Critical(secrecy= {"baseRuntime_shouldBoot():void" ,"shouldSetStartupCheckProvider_whenHealthCheckServiceIsRegistered():void" , "BaseRuntime.boot()","baseRuntime_shouldNotBootWithException():void"} )
 public class BaseRuntimeTest {
 
     private final Monitor monitor = mock();

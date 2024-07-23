@@ -16,6 +16,7 @@ package org.eclipse.edc.api.auth.spi;
 
 import org.eclipse.edc.runtime.metamodel.annotation.ExtensionPoint;
 import org.eclipse.edc.web.spi.exception.AuthenticationFailedException;
+import org.gravity.security.annotations.requirements.Secrecy;
 
 import java.util.List;
 import java.util.Map;
@@ -30,5 +31,6 @@ public interface AuthenticationService {
      * @param headers The headers, that contain the credential to be used, e.g. a token, Basic-Auth header, etc.
      * @throws AuthenticationFailedException when the credential passed was not acceptable (e.g. null, empty, invalid base64)
      */
+	@Secrecy
     boolean isAuthenticated(Map<String, List<String>> headers);
 }

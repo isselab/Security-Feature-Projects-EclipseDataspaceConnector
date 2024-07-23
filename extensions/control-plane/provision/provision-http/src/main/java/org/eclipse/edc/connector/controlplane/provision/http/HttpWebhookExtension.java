@@ -26,11 +26,14 @@ import org.eclipse.edc.spi.system.Hostname;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.web.spi.WebService;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 @Provides(HttpProvisionerWebhookUrl.class)
+@Critical(secrecy= {"AuthenticationRequestFilter.AuthenticationRequestFilter(AuthenticationService)"})
 public class HttpWebhookExtension implements ServiceExtension {
 
     @Inject
@@ -48,6 +51,7 @@ public class HttpWebhookExtension implements ServiceExtension {
     @Inject
     private ManagementApiConfiguration managementApiConfiguration;
 
+    @Secrecy
     @Override
     public void initialize(ServiceExtensionContext context) {
         registerCallbackUrl(context, managementApiConfiguration.getPath(), managementApiConfiguration.getPort());
