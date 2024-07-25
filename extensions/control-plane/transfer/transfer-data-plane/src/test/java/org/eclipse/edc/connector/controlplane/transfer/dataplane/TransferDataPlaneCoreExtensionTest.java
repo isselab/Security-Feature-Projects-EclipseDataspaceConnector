@@ -47,7 +47,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(DependencyInjectionExtension.class)
 @Critical(secrecy= {"initialize(ServiceExtensionContext):void" ,
 		"Vault.resolveSecret(String):String",
-		"InMemoryVault.resolveSecret(String):String"})
+		"InMemoryVault.resolveSecret(String):String",
+		"FsVault.resolveSecret(String):String"})
 class TransferDataPlaneCoreExtensionTest {
 
     private static final String CONTROL_PLANE_API_CONTEXT = "control";

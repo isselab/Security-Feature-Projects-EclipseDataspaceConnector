@@ -28,7 +28,8 @@ import static java.lang.String.format;
  * Represents an {@link ServiceExtension}'s lifecycle phase where it's {@linkplain ServiceExtension#initialize(ServiceExtensionContext)} method is invoked by the
  * {@link ExtensionLifecycleManager}.
  */
-@Critical(secrecy = {"initialize():void"})
+@Critical(secrecy = {"initialize():void"}, 
+  integrity= {"BasicAuthenticationExtension.initialize(ServiceExtensionContext):void"})
 public class InitializePhase extends Phase {
     @Secrecy 
 	protected InitializePhase(Injector injector, InjectionContainer<ServiceExtension> container, ServiceExtensionContext context, Monitor monitor) {
@@ -37,8 +38,12 @@ public class InitializePhase extends Phase {
     @Secrecy
     protected void initialize() {
         // call initialize
+        // &begin[use_feat_ServiceExtension_IdentityAndTrustExtension_InitializePhase]
+        // &begin[use_feat_ServiceExtension_BasicAuthenticationExtension_InitializePhase]
         var target = getTarget();
         target.initialize(context);
+        // &end[use_feat_ServiceExtension_BasicAuthenticationExtension_InitializePhase]
+        // &end[use_feat_ServiceExtension_IdentityAndTrustExtension_InitializePhase]
         var result = container.validate(context);
 
         // wrap failure message in a more descriptive string

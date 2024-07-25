@@ -37,6 +37,7 @@ import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.types.domain.message.RemoteMessage;
 import org.eclipse.edc.token.JwtGenerationService;
+import org.gravity.security.annotations.requirements.Critical;
 
 import java.security.PrivateKey;
 import java.time.Clock;
@@ -48,6 +49,7 @@ import static org.eclipse.edc.spi.result.Result.failure;
 import static org.eclipse.edc.spi.result.Result.success;
 
 @Extension("Identity And Trust Extension to register default services")
+@Critical(secrecy= {"AbstractPrivateKeyResolver.resolvePrivateKey(String):Result"})
 public class IatpDefaultServicesExtension implements ServiceExtension {
 
     @Setting(value = "Alias of private key used for signing tokens, retrieved from private key resolver", defaultValue = "A random EC private key")

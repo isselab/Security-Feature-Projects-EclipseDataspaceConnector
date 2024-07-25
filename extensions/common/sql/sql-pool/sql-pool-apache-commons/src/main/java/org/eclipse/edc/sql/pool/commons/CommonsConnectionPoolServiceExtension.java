@@ -45,7 +45,8 @@ import static java.util.Optional.ofNullable;
 
 @Extension(value = CommonsConnectionPoolServiceExtension.NAME)
 @Critical(secrecy= {"Vault.resolveSecret(String):String",
-		"InMemoryVault.resolveSecret(String):String"})
+		"InMemoryVault.resolveSecret(String):String",
+		 "FsVault.resolveSecret(String):String"})
 public class CommonsConnectionPoolServiceExtension implements ServiceExtension {
 
     public static final String NAME = "Commons Connection Pool";

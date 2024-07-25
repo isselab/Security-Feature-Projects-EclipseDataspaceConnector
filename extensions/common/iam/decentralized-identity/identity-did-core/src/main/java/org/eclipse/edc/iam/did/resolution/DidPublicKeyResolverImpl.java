@@ -24,6 +24,7 @@ import org.eclipse.edc.keys.AbstractPublicKeyResolver;
 import org.eclipse.edc.keys.spi.KeyParserRegistry;
 import org.eclipse.edc.spi.result.Result;
 import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Integrity;
 import org.gravity.security.annotations.requirements.Secrecy;
 import org.jetbrains.annotations.Nullable;
 
@@ -37,8 +38,9 @@ import static java.lang.String.format;
 import static java.util.Collections.emptyList;
 import static org.eclipse.edc.iam.did.spi.document.DidConstants.ALLOWED_VERIFICATION_TYPES;
 
-// &begin[use_PublicKeyResolver]
-@Critical(secrecy = "AbstractPublicKeyResolver.resolveKey(String):Result")
+// &begin[use_feat_PublicKeyResolver]
+@Critical(secrecy = {"AbstractPublicKeyResolver.resolveKey(String):Result"},
+	integrity= {"resolverRegistry:DidResolverRegistry"})
 public class DidPublicKeyResolverImpl extends AbstractPublicKeyResolver implements DidPublicKeyResolver {
 
     /**
@@ -49,6 +51,7 @@ public class DidPublicKeyResolverImpl extends AbstractPublicKeyResolver implemen
     private static final Pattern PATTERN_DID_WITH_OPTIONAL_FRAGMENT = Pattern.compile("(?<did>did:.*:[^#]*)((#)(?<fragment>.*))?");
     private static final String GROUP_DID = "did";
     private static final String GROUP_FRAGMENT = "fragment";
+    @Integrity
     private final DidResolverRegistry resolverRegistry;
 
     public DidPublicKeyResolverImpl(KeyParserRegistry registry, DidResolverRegistry resolverRegistry) {
@@ -138,4 +141,4 @@ public class DidPublicKeyResolverImpl extends AbstractPublicKeyResolver implemen
         };
     }
 }
-// &end[]
+// &end[use_feat_PublicKeyResolver]

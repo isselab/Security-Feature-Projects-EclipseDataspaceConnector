@@ -37,7 +37,8 @@ import static org.mockito.Mockito.when;
 		"resolve_wrongKeyFormat():void",
 		"resolveSecret(String):String",
 		"addRawKey(String, String):Result",
-		"resolveSecret(String):String"
+		"resolveSecret(String):String",
+		"KeyParserRegistry.parse(String):Result"
 		
 		})
 class LocalPublicKeyServiceImplTest {

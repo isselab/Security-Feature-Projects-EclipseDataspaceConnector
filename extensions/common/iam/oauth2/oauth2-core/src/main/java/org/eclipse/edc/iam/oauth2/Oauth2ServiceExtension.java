@@ -40,6 +40,7 @@ import org.eclipse.edc.token.rules.NotBeforeValidationRule;
 import org.eclipse.edc.token.spi.TokenDecoratorRegistry;
 import org.eclipse.edc.token.spi.TokenValidationRulesRegistry;
 import org.eclipse.edc.token.spi.TokenValidationService;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 
 import java.security.PrivateKey;
@@ -55,6 +56,8 @@ import static java.lang.String.format;
  */
 @Provides({ IdentityService.class })
 @Extension(value = Oauth2ServiceExtension.NAME)
+@Critical(secrecy= {"CertificateResolver.resolveCertificate(String):X509Certificate",
+		"AbstractPrivateKeyResolver.resolvePrivateKey(String):Result"})
 public class Oauth2ServiceExtension implements ServiceExtension {
 
     public static final String NAME = "OAuth2 Identity Service";

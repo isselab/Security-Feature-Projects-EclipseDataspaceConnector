@@ -43,7 +43,9 @@ import static org.mockito.Mockito.when;
 		 "verifySecretIsRetrievedFromVault():void",
 		 "verifySecretIsRetrievedFromVaultAsJson():void",
 		 "throwsExceptionIfNoSecretIsFoundInVaultAsJson():void",
-		 "InMemoryVault.resolveSecret(String):String"
+		 "InMemoryVault.resolveSecret(String):String",
+		 "FsVault.resolveSecret(String):String",
+		 "FsVault.resolveSecret(String):String"
 		})
 class HttpRequestParamsProviderImplTest {
 

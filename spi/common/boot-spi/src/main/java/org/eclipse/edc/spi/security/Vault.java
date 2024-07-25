@@ -26,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 @ExtensionPoint
 @Critical(secrecy= {"resolveSecret(String):String" ,
 	"storeSecret(String,String):Result" })
+// &begin[feat_Vault]
 public interface Vault {
 
     /**
@@ -54,3 +55,4 @@ public interface Vault {
      */
     Result<Void> deleteSecret(String key);
 }
+// &end[feat_Vault]

@@ -22,6 +22,7 @@ import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.gravity.security.annotations.requirements.Critical;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -31,6 +32,7 @@ import java.nio.file.Paths;
  */
 @BaseExtension
 @Extension(value = FsVaultExtension.NAME)
+@Critical(secrecy= { "FsVault.FsVault(Path,boolean)"})
 public class FsVaultExtension implements ServiceExtension {
 
     @Setting

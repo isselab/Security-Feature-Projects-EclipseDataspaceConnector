@@ -20,6 +20,8 @@ import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.system.configuration.Config;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.jetbrains.annotations.NotNull;
 
 import java.security.PrivateKey;
@@ -28,6 +30,22 @@ import java.security.PrivateKey;
  * Base class for private key resolvers, that handles the parsing of the key, but still leaves the actual resolution (e.g.
  * from a {@link Vault}) up to the inheritor.
  */
+@Critical(secrecy= {"KeyParserRegistry.parse(String):Result",
+		"AbstractPrivateKeyResolver.resolvePrivateKey(String):Result",
+		"IatpDefaultServicesExtensionTest.setup(ServiceExtensionContext):void",
+		"Oauth2CredentialsRequestFactoryTest.shouldCreatePrivateKeyRequest_whenPrivateKeyNameIsPresent():void",
+		"Oauth2CredentialsRequestFactoryTest.shouldFailIfPrivateKeySecretNotFound():void",
+		"Oauth2CredentialsRequestFactory.createAssertion(String,DataAddress):Result",
+		"JksPrivateKeyResolverTest.resolve_rsaKey():void",
+		 "Oauth2ServiceExtension.createOauth2Service"+
+		"(Oauth2ServiceConfiguration,TokenDecoratorRegistry,IdentityProviderKeyResolver):Oauth2ServiceImpl",
+		"JksPrivateKeyResolverTest.resolve_ecKey():void",
+		"DataPlaneDefaultIamServicesExtension.getPrivateKeySupplier(ServiceExtensionContext):Supplier",
+		"IatpDefaultServicesExtension.createDefaultTokenService(ServiceExtensionContext):SecureTokenService", 
+		 "StsClientTokenIssuanceIntegrationTest.setup():void",
+		 "Oauth2CredentialsRequestFactoryTest.shouldCreatePrivateKeyRequest_whenPrivateKeyNameIsPresent():void",
+		 "Oauth2CredentialsRequestFactoryTest.shouldFailIfPrivateKeySecretNotFound():void"})
+// &begin[feat_AbstractPrivateKeyResolver]
 public abstract class AbstractPrivateKeyResolver implements PrivateKeyResolver {
     private final KeyParserRegistry registry;
     private final Config config;
@@ -40,6 +58,7 @@ public abstract class AbstractPrivateKeyResolver implements PrivateKeyResolver {
     }
 
     @Override
+    @Secrecy
     public Result<PrivateKey> resolvePrivateKey(String id) {
         var encodedKeyResult = resolveInternal(id);
 
@@ -48,7 +67,7 @@ public abstract class AbstractPrivateKeyResolver implements PrivateKeyResolver {
                     monitor.debug("Public key not found, fallback to config. Error: %s".formatted(failure.getFailureDetail()));
                     return resolveFromConfig(id);
                 })
-                .compose(encodedKey -> registry.parse(encodedKey).compose(pk -> {
+                .compose(encodedKey -> registry.parse(encodedKey).compose(pk -> { // &line[use_feat_KeyParserRegistry_AbstractPrivateKeyResolver_'resolvePrivateKey'] 
                     if (pk instanceof PrivateKey privateKey) {
                         return Result.success(privateKey);
                     } else {
@@ -75,3 +94,4 @@ public abstract class AbstractPrivateKeyResolver implements PrivateKeyResolver {
                 Result.success(value);
     }
 }
+// &end[feat_AbstractPrivateKeyResolver]

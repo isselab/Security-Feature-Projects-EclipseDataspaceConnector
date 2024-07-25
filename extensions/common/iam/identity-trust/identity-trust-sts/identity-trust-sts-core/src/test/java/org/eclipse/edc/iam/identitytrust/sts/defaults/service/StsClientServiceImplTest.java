@@ -31,7 +31,8 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 @Critical( secrecy= {"Vault.resolveSecret(String):String",
-		"InMemoryVault.resolveSecret(String):String"})
+		"InMemoryVault.resolveSecret(String):String",
+		"FsVault.resolveSecret(String):String"})
 public class StsClientServiceImplTest {
 
     private final StsClientStore store = mock();

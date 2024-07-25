@@ -42,7 +42,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(DependencyInjectionExtension.class)
-@Critical (secrecy= {"ServiceExtension.initialize(ServiceExtensionContext):void"})
+@Critical (secrecy= {"ServiceExtension.initialize(ServiceExtensionContext):void",
+		"CertificateResolver.resolveCertificate(String):X509Certificate",
+		"AbstractPrivateKeyResolver.resolvePrivateKey(String):Result"})
 class Oauth2ServiceExtensionTest {
 
     private final CertificateResolver certificateResolver = mock();

@@ -56,7 +56,8 @@ import static org.mockserver.verify.VerificationTimes.exactly;
 
 @EndToEndTest
 @Critical (secrecy= {"InMemoryVault.resolveSecret(String):String" ,
-		"Vault.resolveSecret(String):String"})
+		"Vault.resolveSecret(String):String",
+		"FsVault.resolveSecret(String):String"})
 public class DataPlanePublicApiEndToEndTest extends AbstractDataPlaneTest {
 
     public static final String PUBLIC_KEY_ALIAS = "public-key";

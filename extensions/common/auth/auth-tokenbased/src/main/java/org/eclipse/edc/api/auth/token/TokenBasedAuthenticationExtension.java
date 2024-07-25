@@ -36,6 +36,7 @@ import java.util.UUID;
 @Extension(value = TokenBasedAuthenticationExtension.NAME)
 @Critical(secrecy = {"resolveSecret(String):String"
 		})
+// &begin[use_feat_ServiceExtension_TokenBasedAuthenticationExtension]
 public class TokenBasedAuthenticationExtension implements ServiceExtension {
 
     public static final String NAME = "Static token API Authentication";
@@ -58,7 +59,7 @@ public class TokenBasedAuthenticationExtension implements ServiceExtension {
 
         var apiKeyAlias = context.getSetting(AUTH_SETTING_APIKEY_ALIAS, null);
         if (apiKeyAlias != null) {
-            apiKey = vault.resolveSecret(apiKeyAlias);
+            apiKey = vault.resolveSecret(apiKeyAlias); // &line[use_feat_Vault_'Initialize'] 
         }
 
         if (apiKey == null) {
@@ -68,3 +69,4 @@ public class TokenBasedAuthenticationExtension implements ServiceExtension {
         context.registerService(AuthenticationService.class, new TokenBasedAuthenticationService(apiKey));
     }
 }
+// &end[use_feat_ServiceExtension_TokenBasedAuthenticationExtension]

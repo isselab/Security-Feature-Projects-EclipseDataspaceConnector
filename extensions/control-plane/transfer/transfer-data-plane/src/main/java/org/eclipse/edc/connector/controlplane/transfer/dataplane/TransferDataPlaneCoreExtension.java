@@ -58,7 +58,13 @@ import java.util.function.Supplier;
 		"initialize(ServiceExtensionContext):Result<>",
 		"PublicKeyResolver.resolveKey(String):Result<>",
 		"TransferDataPlaneCoreExtension.getPrivateKeySupplier(ServiceExtensionContext,String):Supplier",
-		 "PublicKeyResolver.resolveKey(String):Result"})
+		 "PublicKeyResolver.resolveKey(String):Result",
+		 "AbstractPrivateKeyResolver.resolvePrivateKey(String):Result",
+		 "TransferDataPlaneCoreExtensionTest.shouldNotRegisterConsumerPullControllers_whenSettingsAreMissing"+
+		 "(TransferDataPlaneCoreExtension,ServiceExtensionContext):void",
+		 "TransferDataPlaneCoreExtensionTest.shouldNotRegisterConsumerPullControllers_whenSettingsAreMissing"
+		 +"(TransferDataPlaneCoreExtension,ServiceExtensionContext):void"})
+// &begin[use_feat_ServiceExtension_TransferDataPlaneCoreExtension]
 public class TransferDataPlaneCoreExtension implements ServiceExtension {
 
     @Setting(value = "Alias of private key used for signing tokens, retrieved from private key resolver")
@@ -128,7 +134,7 @@ public class TransferDataPlaneCoreExtension implements ServiceExtension {
         var privateKeyAlias = context.getSetting(TOKEN_SIGNER_PRIVATE_KEY_ALIAS, null);
 
         if (publicKeyAlias != null && privateKeyAlias != null) {
-            var controller = new ConsumerPullTransferTokenValidationApiController(tokenValidationService, dataEncrypter, typeManager, (i) -> publicKeyService.resolveKey(publicKeyAlias));
+            var controller = new ConsumerPullTransferTokenValidationApiController(tokenValidationService, dataEncrypter, typeManager, (i) -> publicKeyService.resolveKey(publicKeyAlias)); // &line[use_feat_LocalPublicKeyServiceImpl_TransferDataPlaneCoreExtension_'Initialize'] 
             webService.registerResource(controlApiConfiguration.getContextAlias(), controller);
 
             var resolver = new ConsumerPullDataPlaneProxyResolver(dataEncrypter, typeManager, new JwtGenerationService(), getPrivateKeySupplier(context, privateKeyAlias), () -> publicKeyAlias, tokenExpirationDateFunction);
@@ -155,3 +161,4 @@ public class TransferDataPlaneCoreExtension implements ServiceExtension {
     }
 
 }
+// &end[use_feat_ServiceExtension_TransferDataPlaneCoreExtension]

@@ -17,6 +17,9 @@ package org.eclipse.edc.vault.filesystem;
 import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.security.Vault;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Integrity;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
@@ -32,8 +35,17 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * Implements a vault backed by a properties file.
  */
+@Critical(secrecy = {"FsVault.FsVault(Path,boolean)",
+		"FsVault.resolveSecret(String):String",
+         "FsVaultExtension.vault(ServiceExtensionContext):Vault",
+         "FsVault.loadSecretFile():void",
+         "StsClientServiceImplTest.authenticate():void",
+         "StsClientServiceImplTest.authenticate():void"},
+integrity= {"vaultFile:Path"})
+// &begin[use_feat_Vault_FsVault]
 public class FsVault implements Vault {
     private final AtomicReference<Map<String, String>> secrets = new AtomicReference<>(new HashMap<>());
+    @Integrity
     private final Path vaultFile;
     private final boolean persistent;
 
@@ -89,6 +101,7 @@ public class FsVault implements Vault {
         return Result.success();
     }
 
+    @Secrecy
     private void loadSecretFile() {
         try (var stream = Files.newInputStream(this.vaultFile)) {
             var properties = new Properties();
@@ -101,3 +114,4 @@ public class FsVault implements Vault {
         }
     }
 }
+// &end[use_feat_Vault_FsVault]

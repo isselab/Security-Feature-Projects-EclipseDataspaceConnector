@@ -37,7 +37,10 @@ import static org.mockito.Mockito.when;
 
 @Critical(secrecy={"Vault.resolveSecret(String):String",
 		"InMemoryVault.resolveSecret(String):String",
-		"PrivateKeyResolver.resolvePrivateKey(String):Result"})
+		"PrivateKeyResolver.resolvePrivateKey(String):Result",
+		"AbstractPrivateKeyResolver.resolvePrivateKey(String):Result",
+		"KeyParserRegistry.parse(String):Result",
+		"FsVault.resolveSecret(String):String"})
 class VaultPrivateKeyResolverTest {
 
     private static final String TEST_SECRET_ALIAS = "test-secret";

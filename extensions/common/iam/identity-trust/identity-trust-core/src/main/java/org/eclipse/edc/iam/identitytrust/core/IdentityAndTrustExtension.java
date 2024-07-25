@@ -132,6 +132,7 @@ public class IdentityAndTrustExtension implements ServiceExtension {
     private RevocationListService revocationListService;
 
     @Override
+            // &begin[use_feat_ServiceExtension_IdentityAndTrustExtension]
     public void initialize(ServiceExtensionContext context) {
 
         // add all rules for self-issued ID tokens
@@ -157,6 +158,7 @@ public class IdentityAndTrustExtension implements ServiceExtension {
 
         participantAgentService.register(participantAgentServiceExtension);
     }
+    // &end[use_feat_ServiceExtension_IdentityAndTrustExtension]
 
     @Provider
     public IdentityService createIdentityService(ServiceExtensionContext context) {

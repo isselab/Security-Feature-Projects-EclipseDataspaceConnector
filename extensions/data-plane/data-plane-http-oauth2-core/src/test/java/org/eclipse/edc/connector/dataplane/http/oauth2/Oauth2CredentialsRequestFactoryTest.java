@@ -49,7 +49,8 @@ import static org.eclipse.edc.iam.oauth2.spi.Oauth2DataAddressSchema.VALIDITY;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-@Critical (secrecy={"resolveSecret(String):String"})
+@Critical (secrecy={"resolveSecret(String):String",
+		"AbstractPrivateKeyResolver.resolvePrivateKey(String):Result"})
 class Oauth2CredentialsRequestFactoryTest {
 
     private final Instant now = Instant.now();

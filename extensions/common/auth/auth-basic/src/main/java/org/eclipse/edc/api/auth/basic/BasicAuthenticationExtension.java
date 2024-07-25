@@ -22,6 +22,9 @@ import org.eclipse.edc.runtime.metamodel.annotation.Setting;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Integrity;
+import org.gravity.security.annotations.requirements.Secrecy;
 
 import java.util.stream.Collectors;
 
@@ -32,14 +35,24 @@ import static java.lang.String.format;
  */
 @Provides(AuthenticationService.class)
 @Extension(value = "Basic authentication")
+@Critical(secrecy= {"ServiceExtension.initialize(ServiceExtensionContext):void",
+		"ConfigCredentials(String,String):void" ,
+		"BasicAuthenticationExtension.initialize(ServiceExtensionContext):void"},
+	integrity= {"vault:Vault",
+			"BasicAuthenticationExtension.initialize(ServiceExtensionContext):void",
+			"ConfigCredentials.ConfigCredentials(String,String)"})
 public class BasicAuthenticationExtension implements ServiceExtension {
 
     @Setting
     public static final String BASIC_AUTH = "edc.api.auth.basic.vault-keys";
     @Inject
+    @Integrity
     private Vault vault;
 
     @Override
+    @Secrecy
+    @Integrity
+            // &begin[use_feat_ServiceExtension_BasicAuthenticationExtension]
     public void initialize(ServiceExtensionContext context) {
         var monitor = context.getMonitor();
 
@@ -50,7 +63,9 @@ public class BasicAuthenticationExtension implements ServiceExtension {
 
         // Register basic authentication filter
         if (!credentials.isEmpty()) {
+            // &begin[use_feat_ServiceExtension_BasicAuthenticationExtension_BasicAuthenticationService]
             var authService = new BasicAuthenticationService(vault, credentials, monitor);
+            // &end[use_feat_ServiceExtension_BasicAuthenticationExtension_BasicAuthenticationService]
             context.registerService(AuthenticationService.class, authService);
             monitor.info(format("API Authentication: basic auth configured with %s credential(s)", credentials.size()));
         } else {
@@ -58,21 +73,44 @@ public class BasicAuthenticationExtension implements ServiceExtension {
         }
     }
 
-    static class ConfigCredentials {
+    // &end[use_feat_ServiceExtension_BasicAuthenticationExtension]
+@Critical (secrecy= {"username:String",
+		 "vaultKey:String",
+		 "ConfigCredentials(String,String):void",
+		 "ConfigCredentials.getUsername():String",
+		 "ConfigCredentials.getVaultKey():String",
+		 "BasicAuthenticationServiceTest.isAuthorized_wrongVaultKey():void",
+		 "BasicAuthenticationService.checkBasicAuthValid(Result):boolean",
+		 "BasicAuthenticationServiceTest.TEST_CREDENTIALS:List"}, 
+		integrity= {"vaultKey:String",  
+				"ConfigCredentials(String, String):void",
+				"BasicAuthenticationServiceTest.TEST_CREDENTIALS:List",
+				"ConfigCredentials.getUsername():String" ,
+				"ConfigCredentials.getVaultKey():String"
+            })
+        // &begin[feat_ConfigCredentials]
+static class ConfigCredentials {
+        @Secrecy
         private final String username;
+        @Secrecy
+        @Integrity
         private final String vaultKey;
 
+        @Secrecy
         ConfigCredentials(String username, String vaultKey) {
             this.username = username;
             this.vaultKey = vaultKey;
         }
 
+        @Secrecy
         public String getUsername() {
-            return username;
+            return username; 
         }
 
+        @Secrecy
         public String getVaultKey() {
             return vaultKey;
         }
     }
+    // &end[feat_ConfigCredentials]
 }

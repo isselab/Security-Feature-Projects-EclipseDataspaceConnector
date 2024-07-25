@@ -54,7 +54,7 @@ import static org.mockito.Mockito.mock;
 
 @ComponentTest
 @Critical (secrecy= { "storeSecret(String,String):Result",
-"resolveSecret(String):String" })
+"resolveSecret(String):String","AbstractPrivateKeyResolver.resolvePrivateKey(String):Result"})
 
 
 public class StsClientTokenIssuanceIntegrationTest {

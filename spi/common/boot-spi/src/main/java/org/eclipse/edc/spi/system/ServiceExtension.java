@@ -38,26 +38,28 @@ import org.gravity.security.annotations.requirements.Secrecy;
 		"StsDefaultStoresExtensionTest.initialize(StsDefaultStoresExtension,ServiceExtensionContext):void",
 		"StsRemoteClientExtensionTest.initialize(StsRemoteClientExtension,ServiceExtensionContext):void",
 		"StsRemoteClientConfigurationExtensionTest.initialize(StsRemoteClientConfigurationExtension,ServiceExtensionContext,Vault):void"})
+
+// &begin[feat_ServiceExtension]
 public interface ServiceExtension extends SystemExtension {
 
-    /** 
-     * Initializes the extension.
-     */
+	/** 
+	 * Initializes the extension.
+	 */
 	@Secrecy
-    default void initialize(ServiceExtensionContext context) {
-    }
+	default void initialize(ServiceExtensionContext context) {
+	}
 
-    /**
-     * Signals the extension to prepare for the runtime to receive requests.
-     */
-    default void start() {
-    }
+	/**
+	 * Signals the extension to prepare for the runtime to receive requests.
+	 */
+	default void start() {
+	}
 
-    /**
-     * Signals the extension to release resources and shutdown.
-     */
-    default void shutdown() {
-    }
+	/**
+	 * Signals the extension to release resources and shutdown.
+	 */
+	default void shutdown() {
+	}
 
     /**
      * Hook method to perform some additional preparatory work before the extension is started.
@@ -71,3 +73,4 @@ public interface ServiceExtension extends SystemExtension {
     default void prepare() {
     }
 }
+// &end[feat_ServiceExtension]

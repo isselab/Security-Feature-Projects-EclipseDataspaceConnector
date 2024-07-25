@@ -33,7 +33,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @Disabled("This resolver will be refactored shortly")
-@Critical(secrecy= {"PrivateKeyResolver.resolvePrivateKey(String):Result"})
+@Critical(secrecy= {"PrivateKeyResolver.resolvePrivateKey(String):Result",
+		"KeyParserRegistry.parse(String):Result",
+		"AbstractPrivateKeyResolver.resolvePrivateKey(String):Result",
+		"JksPrivateKeyResolverTest.resolve_ecKey():void",
+		"JksPrivateKeyResolverTest.resolve_rsaKey():void"}) 
 class JksPrivateKeyResolverTest {
     private static final String PASSWORD = "test123";
     private static final String TEST_KEYSTORE = "edc-test-keystore.jks";
@@ -41,7 +45,7 @@ class JksPrivateKeyResolverTest {
     private JksPrivateKeyResolver keyResolver;
     private KeyParserRegistry registry;
 
-    @Test
+    @Test 
     public void resolve_rsaKey() {
         assertThat(keyResolver.resolvePrivateKey("testkey"))
                 .isNotNull();

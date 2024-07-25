@@ -36,7 +36,9 @@ import java.security.PublicKey;
 		 "TokenValidationServiceImplTest.setUp():void",
 		 "Oauth2ServiceImplTest.setUp():void",
 		 "LocalPublicKeyServiceImpl.resolveKey(String):Result",
-		 "JwtPresentationVerifierTest.setup():void"},
+		 "JwtPresentationVerifierTest.setup():void",
+		 "AbstractPublicKeyResolver.resolveKey(String):Result",
+		 "KeyParserRegistry.parse(String):Result"},
     integrity= {"registry:KeyParserRegistry",
     		})
 // &begin[feat_PublicKeyResolver]
@@ -55,7 +57,7 @@ public abstract class AbstractPublicKeyResolver implements PublicKeyResolver {
         var encodedKeyResult = resolveInternal(id);
         return encodedKeyResult
                 .compose(encodedKey ->
-                        registry.parse(encodedKey).compose(pk -> {
+                        registry.parse(encodedKey).compose(pk -> { // &line[use_feat_KeyParserRegistry_AbstractPublicKeyResolver_'resolveKey'] 
                             if (pk instanceof PublicKey publicKey) {
                                 return Result.success(publicKey);
                             } else return Result.failure("The specified resource did not contain public key material.");

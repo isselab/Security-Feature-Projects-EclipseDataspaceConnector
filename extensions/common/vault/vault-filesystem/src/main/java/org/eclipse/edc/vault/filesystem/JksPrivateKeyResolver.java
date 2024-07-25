@@ -21,6 +21,9 @@ import org.eclipse.edc.keys.spi.KeyParserRegistry;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.system.configuration.Config;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Integrity;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -32,9 +35,13 @@ import java.security.KeyStore;
  * Resolves an RSA or EC private key from a JKS keystore. This is not suitable for production environments, because the keystore
  * password is kept in memory for subsequent queries against the JKS. In addition, the {@link KeyStore} will not work in a clustered environment.
  */
+@Critical(secrecy= {"JksPrivateKeyResolver.password:String"}, integrity= {"password:String", "keyStore:KeyStore"})
+// &begin[use_feat_AbstractPrivateKeyResolver]
 public class JksPrivateKeyResolver extends AbstractPrivateKeyResolver {
-
+    @Integrity
+    @Secrecy
     private final String password;
+    @Integrity
     private final KeyStore keyStore;
     private final Monitor monitor;
 
@@ -82,3 +89,4 @@ public class JksPrivateKeyResolver extends AbstractPrivateKeyResolver {
         }
     }
 }
+// &end[use_feat_AbstractPrivateKeyResolver]

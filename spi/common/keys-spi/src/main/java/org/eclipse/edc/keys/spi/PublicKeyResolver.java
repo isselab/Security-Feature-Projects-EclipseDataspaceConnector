@@ -28,6 +28,7 @@ import java.security.PublicKey;
 @Critical( secrecy= {"LocalPublicKeyDefaultExtensionTest.localPublicKeyService_withPathConfig(LocalPublicKeyDefaultExtension,ServiceExtensionContext):void",
 		"LocalPublicKeyDefaultExtensionTest.localPublicKeyService_withValueConfig(LocalPublicKeyDefaultExtension,ServiceExtensionContext):void",		
 "PublicKeyResolver.resolveKey(String):Result",
+"TokenValidationServiceImpl.validate(TokenRepresentation,PublicKeyResolver,List):Result",
 "TransferDataPlaneCoreExtension.initialize(ServiceExtensionContext):void" })
 public interface PublicKeyResolver {
 
@@ -35,5 +36,5 @@ public interface PublicKeyResolver {
      * Resolves the key or return null if not found.
      */
 	@Secrecy
-    Result<PublicKey> resolveKey(String id);  
+    Result<PublicKey> resolveKey(String id);
 }

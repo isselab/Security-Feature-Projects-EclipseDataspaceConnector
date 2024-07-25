@@ -46,8 +46,8 @@ import static org.eclipse.edc.iam.oauth2.Oauth2ServiceExtension.OAUTH2_TOKEN_CON
 /**
  * Implements the OAuth2 client credentials flow and bearer token validation.
  */
-@Critical(secrecy= {"Oauth2ServiceImpl.verifyJwtToken(TokenRepresentation,VerificationContext):Result",
-		 "TokenValidationServiceImpl.validate(TokenRepresentation,PublicKeyResolver,List):Result" ,
+@Critical(secrecy= {"verifyJwtToken(TokenRepresentation,VerificationContext):Result",
+		 "validate(TokenRepresentation,PublicKeyResolver,List):Result" ,
 		 "TokenValidationService.validate(TokenRepresentation,PublicKeyResolver,List):Result",
 		 "ProtocolTokenValidatorImplTest.shouldVerifyToken():void",
 		 "LocalPublicKeyServiceImpl.resolveKey(String):Result",
@@ -96,8 +96,8 @@ public class Oauth2ServiceImpl implements IdentityService {
                 .compose(client::requestToken);
     }
 
-    @Override 
     @Secrecy 
+    @Override 
     public Result<ClaimToken> verifyJwtToken(TokenRepresentation tokenRepresentation, VerificationContext context) {
         return tokenValidationService.validate(tokenRepresentation, publicKeyResolver, tokenValidationRuleRegistry.getRules(OAUTH2_TOKEN_CONTEXT));
     }

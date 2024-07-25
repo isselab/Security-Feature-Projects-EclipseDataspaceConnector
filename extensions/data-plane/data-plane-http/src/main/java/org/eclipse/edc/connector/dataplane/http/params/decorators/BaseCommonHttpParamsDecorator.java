@@ -29,7 +29,8 @@ import java.util.Optional;
 import static java.lang.String.format;
 
 @Critical (secrecy= { "Vault.resolveSecret(String):String",
-		"InMemoryVault.resolveSecret(String):String"})
+		"InMemoryVault.resolveSecret(String):String",
+		"FsVault.resolveSecret(String):String"})
 public class BaseCommonHttpParamsDecorator implements HttpParamsDecorator {
 
     private final Vault vault;
@@ -77,7 +78,7 @@ public class BaseCommonHttpParamsDecorator implements HttpParamsDecorator {
             throw new EdcException(format("DataFlowRequest %s: 'secretName' property is missing in HttpDataAddress", requestId));
         }
 
-        var value = vault.resolveSecret(secretName);
+        var value = vault.resolveSecret(secretName); // &line[use_feat_Vault_BaseCommonHttpParamsDecorator'extractAuthCode'] 
 
         return Optional.ofNullable(value)
                 .map(it -> getTokenFromJson(it, requestId).orElse(it))

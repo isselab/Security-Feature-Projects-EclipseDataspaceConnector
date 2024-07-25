@@ -31,7 +31,10 @@ import java.util.Optional;
  * Note that storing private key material in the config is <strong>NOT SECURE</strong> and should be avoided in production scenarios!
  */
 @Critical (secrecy={"Vault.resolveSecret(String):String" ,
-		"InMemoryVault.resolveSecret(String):String"})
+		"InMemoryVault.resolveSecret(String):String",
+		"FsVault.resolveSecret(String):String",
+		"FsVault.resolveSecret(String):String"})
+// &begin[use_feat_AbstractPrivateKeyResolver_VaultPrivateKeyResolver]
 public class VaultPrivateKeyResolver extends AbstractPrivateKeyResolver {
 
     private final Vault vault;
@@ -49,3 +52,4 @@ public class VaultPrivateKeyResolver extends AbstractPrivateKeyResolver {
                 .orElseGet(() -> Result.failure("Private key with ID '%s' not found in Vault".formatted(keyId)));
     }
 }
+// &end[use_feat_AbstractPrivateKeyResolver_VaultPrivateKeyResolver]

@@ -41,6 +41,7 @@ import org.eclipse.edc.verifiablecredentials.linkeddata.LdpCreationUtils;
 import org.eclipse.edc.verifiablecredentials.linkeddata.LdpVerifier;
 import org.eclipse.edc.verifiablecredentials.linkeddata.TestData;
 import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

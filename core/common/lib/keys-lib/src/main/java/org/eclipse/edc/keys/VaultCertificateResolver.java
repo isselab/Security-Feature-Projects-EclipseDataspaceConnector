@@ -28,6 +28,7 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
 @Critical(secrecy={"resolveSecret(String):String"})
+// &begin[use_feat_CertificateResolver]
 public class VaultCertificateResolver implements CertificateResolver {
     public static final String HEADER = "-----BEGIN CERTIFICATE-----";
     public static final String FOOTER = "-----END CERTIFICATE-----";
@@ -42,7 +43,7 @@ public class VaultCertificateResolver implements CertificateResolver {
 
     @Override
     public @Nullable X509Certificate resolveCertificate(String id) {
-        var certificateRepresentation = vault.resolveSecret(id);
+        var certificateRepresentation = vault.resolveSecret(id); // &line[use_feat_Vault_'resolveCertificate']
         if (certificateRepresentation == null) {
             return null;
         }
@@ -56,3 +57,4 @@ public class VaultCertificateResolver implements CertificateResolver {
         }
     }
 }
+// &end[use_]

@@ -17,6 +17,7 @@ package org.eclipse.edc.keys;
 import org.eclipse.edc.junit.assertions.AbstractResultAssert;
 import org.eclipse.edc.keys.spi.KeyParser;
 import org.eclipse.edc.spi.result.Result;
+import org.gravity.security.annotations.requirements.Critical;
 import org.junit.jupiter.api.Test;
 
 import java.security.Key;
@@ -24,6 +25,7 @@ import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 
+@Critical (secrecy= {"KeyParserRegistry.parse(String):Result"})
 class KeyParserRegistryImplTest {
 
     private final KeyParserRegistryImpl registry = new KeyParserRegistryImpl();

@@ -23,6 +23,7 @@ import java.util.Map;
 
 @FunctionalInterface
 @ExtensionPoint
+// &begin[feat_AuthenticationService]
 public interface AuthenticationService {
 
     /**
@@ -31,6 +32,7 @@ public interface AuthenticationService {
      * @param headers The headers, that contain the credential to be used, e.g. a token, Basic-Auth header, etc.
      * @throws AuthenticationFailedException when the credential passed was not acceptable (e.g. null, empty, invalid base64)
      */
-	@Secrecy
+    @Secrecy
     boolean isAuthenticated(Map<String, List<String>> headers);
 }
+// &end[feat_AuthenticationService]

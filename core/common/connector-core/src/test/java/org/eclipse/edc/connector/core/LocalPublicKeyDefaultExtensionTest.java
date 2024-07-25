@@ -45,7 +45,8 @@ import static org.mockito.Mockito.when;
 		"resolveKey(String):Result",
 		"ServiceExtension.initialize(ServiceExtensionContext):void",
 		"LocalPublicKeyDefaultExtension.prepare():void",
-		"LocalPublicKeyDefaultExtension.prepare():void"})
+		"LocalPublicKeyDefaultExtension.prepare():void",
+		"KeyParserRegistry.parse(String):Result"})
 class LocalPublicKeyDefaultExtensionTest {
 
     private final KeyParserRegistry keyParserRegistry = mock();

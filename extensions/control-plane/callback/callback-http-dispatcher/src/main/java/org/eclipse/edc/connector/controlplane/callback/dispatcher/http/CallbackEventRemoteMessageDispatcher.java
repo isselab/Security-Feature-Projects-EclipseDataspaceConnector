@@ -34,7 +34,8 @@ import static java.lang.String.format;
  * Implementation of {@link GenericHttpDispatcherDelegate} that works for message of type {@link CallbackEventRemoteMessage}
  */
 @Critical( secrecy={ "InMemoryVault.resolveSecret(String):String",
-		"Vault.resolveSecret(String):String"})
+		"Vault.resolveSecret(String):String",
+		"FsVault.resolveSecret(String):String"})
 public class CallbackEventRemoteMessageDispatcher implements GenericHttpDispatcherDelegate<CallbackEventRemoteMessage, Void> {
 
     private static final String APPLICATION_JSON = "application/json";
@@ -87,7 +88,7 @@ public class CallbackEventRemoteMessageDispatcher implements GenericHttpDispatch
         if (authCodeId == null) {
             throw new EdcException(format("Error dispatching event %s: Auth Code Id cannot be null when the Auth Key was provided", eventName));
         }
-        return Optional.ofNullable(vault.resolveSecret(authCodeId))
+        return Optional.ofNullable(vault.resolveSecret(authCodeId)) // &line[use_feat_Vault_CallBackEventRemoteMessageDispatcher'extractAuthCode']
                 .orElseThrow(() -> new EdcException(format("Error dispatching event %s: no secret found in vault with name %s", eventName, authCodeId)));
     }
 }

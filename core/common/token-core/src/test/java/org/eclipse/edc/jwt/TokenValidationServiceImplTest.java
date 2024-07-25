@@ -56,7 +56,8 @@ import static org.mockito.Mockito.when;
 		"PublicKeyResolver.resolveKey(String):Result",
 		"LocalPublicKeyServiceImpl.resolveKey(String):Result",
 		"AbstractPublicKeyResolver.resolveKey(String):Result",
-		"AbstractPublicKeyResolver.resolveInternal(String):Result"})
+		"AbstractPublicKeyResolver.resolveInternal(String):Result",
+		"AbstractPublicKeyResolver.resolveKey(String):Result"})
 class TokenValidationServiceImplTest {
 
     private final Instant now = Instant.now();

@@ -22,6 +22,7 @@ import org.eclipse.edc.spi.result.StoreResult;
 import org.eclipse.edc.spi.security.Vault;
 import org.eclipse.edc.spi.types.domain.DataAddress;
 import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Integrity;
 
 import java.util.Optional;
 
@@ -29,12 +30,13 @@ import java.util.Optional;
  * Vault implementation of {@link EndpointDataReferenceCache}
  */
 @Critical (secrecy= {"resolveSecret(String):String" ,
-		"storeSecret(String,String):Result"})
+		"storeSecret(String,String):Result"}, integrity={"vault:Vault"})
+// &begin[use_feat_Vault_VaultEndpointDataReferenceCache]
 public class VaultEndpointDataReferenceCache implements EndpointDataReferenceCache {
 
     public static final String SEPARATOR = "--";
     public static final String VAULT_PREFIX = "edr" + SEPARATOR;
-
+    @Integrity
     private final Vault vault;
     private final String vaultPath;
 
@@ -93,3 +95,4 @@ public class VaultEndpointDataReferenceCache implements EndpointDataReferenceCac
         return vaultPath + VAULT_PREFIX + transferProcessId;
     }
 }
+// &end[use_feat_Vault_VaultEndpointDataReferenceCache]

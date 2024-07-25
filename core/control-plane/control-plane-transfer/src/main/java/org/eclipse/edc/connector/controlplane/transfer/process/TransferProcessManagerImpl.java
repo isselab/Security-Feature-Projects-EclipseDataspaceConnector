@@ -109,7 +109,8 @@ import static org.eclipse.edc.spi.types.domain.DataAddress.EDC_DATA_ADDRESS_SECR
 @Critical( secrecy={"Vault.resolveSecret(String):String", 
 		"Vault.storeSecret(String,String):Result" ,
 		"InMemoryVault.resolveSecret(String):String",
-		"InMemoryVault.storeSecret(String,String):Result"})
+		"InMemoryVault.storeSecret(String,String):Result",
+		"FsVault.resolveSecret(String):String"})
 public class TransferProcessManagerImpl extends AbstractStateEntityManager<TransferProcess, TransferProcessStore>
         implements TransferProcessManager {
     private ResourceManifestGenerator manifestGenerator;

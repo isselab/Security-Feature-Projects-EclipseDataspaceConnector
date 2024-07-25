@@ -19,23 +19,39 @@ import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.security.Vault;
 import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Integrity;
+import org.gravity.security.annotations.requirements.Secrecy;
 
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-// &begin[feat_Basic_Token_Auth]
+// &begin[use_feat_AuthenticationService_BasicAuthenticationService]
 @Critical ( secrecy= {"isAuthenticated(Map):boolean" ,
 		"Vault.resolveSecret(String):String",
-		"InMemoryVault.resolveSecret(String):String"}) 
+		"InMemoryVault.resolveSecret(String):String",
+		"ConfigCredentials.getUsername():String",
+		"ConfigCredentials.getVaultKey():String",
+		"FsVault.resolveSecret(String):String",
+		"BasicAuthenticationService.checkBasicAuthValid(Result):boolean",
+		"BasicAuthCredentials.password:String",
+		"BasicAuthCredentials.username:String",
+		"ConfigCredentials.getUsername():String",
+		"ConfigCredentials.getVaultKey():String",
+		"ConfigCredentials.getUsername():String"},
+integrity= {"BasicAuthenticationService.checkBasicAuthValid(Result):boolean",
+		"BasicAuthCredentials.password:String",
+		"BasicAuthCredentials.username:String",
+		"ConfigCredentials.getUsername():String",
+		"ConfigCredentials.getVaultKey():String"})
 public class BasicAuthenticationService implements AuthenticationService {
 
     private static final String BASIC_AUTH_HEADER_NAME = "Authorization";
     private final Base64.Decoder b64Decoder;
     private final Vault vault;
     private final List<BasicAuthenticationExtension.ConfigCredentials> basicAuthUsersWithVaultKeyConfigs;
-    private final Monitor monitor;
+    private final Monitor monitor; 
 
     public BasicAuthenticationService(
             Vault vault,
@@ -103,6 +119,9 @@ public class BasicAuthenticationService implements AuthenticationService {
      *                        used in the request.
      * @return True if credentials are correct
      */
+    @Secrecy
+    @Integrity
+            // &begin[use_feat_ConfigCredentials_'checkBasicAuthValid']
     private boolean checkBasicAuthValid(Result<BasicAuthCredentials> authCredentials) {
         if (authCredentials.failed()) {
             authCredentials.getFailureMessages().forEach(monitor::debug);
@@ -112,11 +131,24 @@ public class BasicAuthenticationService implements AuthenticationService {
         var creds = authCredentials.getContent();
 
         return basicAuthUsersWithVaultKeyConfigs.stream()
-                .anyMatch(it -> it.getUsername().equals(creds.username) && Objects.equals(vault.resolveSecret(it.getVaultKey()), creds.password));
+                .anyMatch(it -> it.getUsername().equals(creds.username) && Objects.equals(vault.resolveSecret(it.getVaultKey()) // &line[use_feat_Vault_'checkBasicAuthValid']
+                        , creds.password)); // &line[use_feat_BasicAuthCredentials]
     }
-
+    // &end[use_feat_ConfigCredentials_'checkBasicAuthValid']
+    //&end[feat_Basic_Token_Auth]
+    @Critical(secrecy= {"username:String",
+    		"password:String",
+    		"BasicAuthenticationService.checkBasicAuthValid(Result):boolean"},
+    		integrity= {"password:String",
+    				"username:String",
+    				"BasicAuthenticationService.checkBasicAuthValid(Result):boolean"})
+            // &begin[feat_BasicAuthCredentials]
     static class BasicAuthCredentials {
+        @Integrity
+        @Secrecy
         String username;
+        @Integrity
+        @Secrecy
         String password;
 
         BasicAuthCredentials(String username, String password) {
@@ -124,5 +156,6 @@ public class BasicAuthenticationService implements AuthenticationService {
             this.password = password;
         }
     }
+    // &end[feat_BasicAuthCredentials]
 }
-//&end[feat_Basic_Token_Auth]
+

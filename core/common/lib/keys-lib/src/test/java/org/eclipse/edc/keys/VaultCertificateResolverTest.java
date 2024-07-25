@@ -38,7 +38,8 @@ import static org.mockito.Mockito.when;
 @Critical (secrecy={"resolveCertificate():void" ,
 		"resolveCertificate_notFound():void",
 		"resolveCertificate_notFound():void",
-		"resolveSecret(String):String"
+		"resolveSecret(String):String",
+		"CertificateResolver.resolveCertificate(String):X509Certificate"
 		
 		})
 class VaultCertificateResolverTest {

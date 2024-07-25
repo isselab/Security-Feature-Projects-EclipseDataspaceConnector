@@ -17,6 +17,8 @@ package org.eclipse.edc.api.auth.basic;
 import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.security.Vault;
 import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Integrity;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -36,9 +38,17 @@ import static org.mockito.Mockito.when;
 		"isAuthorized(String):void" ,
 		"isAuthorized_headerNotPresent():void",
 		"Vault.resolveSecret(String):String",
-		"InMemoryVault.resolveSecret(String):String"})
+		"InMemoryVault.resolveSecret(String):String",
+		"isAuthorized_wrongVaultKey():void",
+		 "ConfigCredentials(String,String)",
+		 "TEST_CREDENTIALS:List",
+		 "FsVault.resolveSecret(String):String"} , 
+integrity= {"ConfigCredentials(String,String)",
+		 "TEST_CREDENTIALS:List",
+		 "isAuthorized_wrongVaultKey():void"})
 class BasicAuthenticationServiceTest {
-
+	@Secrecy
+	@Integrity
     private static final List<BasicAuthenticationExtension.ConfigCredentials> TEST_CREDENTIALS = List.of(
             new BasicAuthenticationExtension.ConfigCredentials("usera", "api-basic-auth-usera"),
             new BasicAuthenticationExtension.ConfigCredentials("userb", "api-basic-auth-userb")

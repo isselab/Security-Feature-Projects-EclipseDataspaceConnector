@@ -1,2 +1,46 @@
 Eclipse_Dataspace_Connector
-	feat_Basic_Token_Auth
+    feat_PublicKeyResolver
+        use_feat_PublicKeyResolver
+    feat_ServiceExtension
+        use_feat_ServiceExtension_IdentityAndTrustExtension
+            use_feat_ServiceExtension_IdentityAndTrustExtension_InitializePhase
+        use_feat_ServiceExtension_BasicAuthenticationExtension
+            use_feat_ServiceExtension_BasicAuthenticationExtension_InitializePhase
+            use_feat_ServiceExtension_BasicAuthenticationExtension_BasicAuthenticationService
+            feat_ConfigCredentials
+                use_feat_ConfigCredentials_'checkBasicAuthValid'
+        use_feat_ServiceExtension_TokenBasedAuthenticationExtension
+        use_feat_ServiceExtension_TransferDataPlaneCoreExtension
+        use_feat_ServiceExtension_ManagementApiConfigurationExtension
+    feat_AuthenticationService
+        use_feat_AuthenticationService_BasicAuthenticationService
+        feat_BasicAuthCredentials
+            use_feat_BasicAuthCredentials
+    feat_Vault
+        use_feat_Vault_FsVault
+        use_feat_Vault_'resolveFromVault'
+        use_feat_Vault_'Initialize'
+        use_feat_Vault_'resolveCertificate'
+        use_feat_Vault_VaultEndpointDataReferenceCache
+        use_feat_Vault_CallBackEventRemoteMessageDispatcher'extractAuthCode'
+        use_feat_Vault_BaseCommonHttpParamsDecorator'extractAuthCode'
+        use_feat_Vault_'checkBasicAuthValid'
+    feat_CertificateResolver
+        use_feat_CertificateResolver
+
+    feat_LocalPublicKeyServiceImpl
+        use_feat_LocalPublicKeyServiceImpl_TokenValidationServiceImpl
+        use_feat_LocalPublicKeyServiceImpl_TransferDataPlaneCoreExtension_'Initialize'
+
+    feat_AbstractPrivateKeyResolver
+        use_feat_AbstractPrivateKeyResolver
+        use_feat_AbstractPrivateKeyResolver_VaultPrivateKeyResolver
+        use_feat_AbstractPrivateKeyResolver_Oauth2CredentialsRequest_'CreateAssertion'
+    feat_KeyParserRegistry
+        use_feat_KeyParserRegistry_AbstractPrivateKeyResolver_'resolvePrivateKey'
+        use_feat_KeyParserRegistry_AbstractPublicKeyResolver_'resolveKey'
+        use_feat_KeyParserRegistry_LocalPublicKeyServiceImpl_'parseKey'
+
+
+
+

@@ -29,6 +29,7 @@ import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.token.JwtGenerationService;
 import org.eclipse.edc.token.spi.TokenValidationService;
+import org.gravity.security.annotations.requirements.Critical;
 import org.jetbrains.annotations.NotNull;
 
 import java.security.PrivateKey;
@@ -36,6 +37,7 @@ import java.util.function.Supplier;
 
 
 @Extension(value = DataPlaneDefaultIamServicesExtension.NAME)
+@Critical(secrecy= {"AbstractPrivateKeyResolver.resolvePrivateKey(String):Result"})
 public class DataPlaneDefaultIamServicesExtension implements ServiceExtension {
 
     public static final String NAME = "Data Plane Framework Default IAM Services";

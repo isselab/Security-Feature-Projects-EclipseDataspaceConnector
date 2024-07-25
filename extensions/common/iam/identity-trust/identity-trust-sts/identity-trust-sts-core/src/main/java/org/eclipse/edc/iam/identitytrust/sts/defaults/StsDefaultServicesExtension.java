@@ -29,11 +29,13 @@ import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.token.JwtGenerationService;
 import org.eclipse.edc.transaction.spi.TransactionContext;
+import org.gravity.security.annotations.requirements.Critical;
 
 import java.time.Clock;
 import java.util.concurrent.TimeUnit;
 
 @Extension(StsDefaultServicesExtension.NAME)
+@Critical(secrecy={"AbstractPrivateKeyResolver.resolvePrivateKey(String):Result"})
 public class StsDefaultServicesExtension implements ServiceExtension {
 
     public static final String NAME = "Secure Token Service Default Services";

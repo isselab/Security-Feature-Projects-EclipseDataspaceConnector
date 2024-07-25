@@ -43,7 +43,8 @@ import static org.eclipse.edc.iam.oauth2.spi.Oauth2DataAddressSchema.VALIDITY;
 /**
  * Factory class that provides methods to build {@link Oauth2CredentialsRequest} instances
  */
-@Critical ( secrecy= {"resolveSecret(String):String"})
+@Critical ( secrecy= {"resolveSecret(String):String",
+		"AbstractPrivateKeyResolver.resolvePrivateKey(String):Result"})
 public class Oauth2CredentialsRequestFactory {
 
     private static final long DEFAULT_TOKEN_VALIDITY = TimeUnit.MINUTES.toSeconds(5);
@@ -106,7 +107,7 @@ public class Oauth2CredentialsRequestFactory {
 
     @NotNull
     private Result<TokenRepresentation> createAssertion(String pkSecret, DataAddress dataAddress) {
-        var privateKey = privateKeyResolver.resolvePrivateKey(pkSecret);
+        var privateKey = privateKeyResolver.resolvePrivateKey(pkSecret); // &line[use_feat_AbstractPrivateKeyResolver_Oauth2CredentialsRequest_'CreateAssertion'] 
         if (privateKey.failed()) {
             return Result.failure("Failed to resolve private key with alias: " + pkSecret);
         }

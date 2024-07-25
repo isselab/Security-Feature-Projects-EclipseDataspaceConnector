@@ -57,7 +57,8 @@ import static org.mockserver.stop.Stop.stopQuietly;
 
 @ComponentTest
 @Critical( secrecy={"Vault.resolveSecret(String):String",
-		"InMemoryVault.resolveSecret(String):String"})
+		"InMemoryVault.resolveSecret(String):String",
+		"FsVault.resolveSecret(String):String"})
 public class GenericHttpRemoteDispatcherWrapperTest {
 
     private static final int CALLBACK_PORT = getFreePort();

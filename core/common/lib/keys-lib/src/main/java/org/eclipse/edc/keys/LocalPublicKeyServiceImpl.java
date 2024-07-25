@@ -37,13 +37,16 @@ import java.util.Optional;
 					"InMemoryVault.resolveSecret(String):String",
 					"JwtPresentationVerifierTest.setup():void",
 					"LocalPublicKeyServiceImpl.resolveKey(String):Result",
-					"LocalPublicKeyDefaultExtension.prepare():void"},
+					"LocalPublicKeyDefaultExtension.prepare():void",
+					"KeyParserRegistry.parse(String):Result",
+					"FsVault.resolveSecret(String):String"},
 integrity={ "vault:Vault", 
 		"registry:KeyParserRegistry",
 		"cachedKeys:Map<String, PublicKey>"})
+// &begin[feat_LocalPublicKeyServiceImpl]
 public class LocalPublicKeyServiceImpl implements LocalPublicKeyService {
-	@Integrity
-	private final Vault vault;
+    @Integrity
+    private final Vault vault;
     @Integrity
     private final KeyParserRegistry registry;
     @Integrity
@@ -55,24 +58,28 @@ public class LocalPublicKeyServiceImpl implements LocalPublicKeyService {
     }
 
     @Override
-    @Secrecy 
+    @Secrecy
     public Result<PublicKey> resolveKey(String id) {
         return resolveFromCache(id)
                 .map(Result::success)
                 .or(() -> resolveFromVault(id).map(this::parseKey))
                 .orElseGet(() -> Result.failure("No public key could be resolved for key-ID '%s'".formatted(id)));
     }
+
+    // &begin[use_feat_Vault_'resolveFromVault']
     @Secrecy
     private Optional<String> resolveFromVault(String id) {
         return Optional.ofNullable(vault.resolveSecret(id));
     }
+
+    // &end[use_feat_Vault_'resolveFromVault']
     @Secrecy
     private Optional<PublicKey> resolveFromCache(String id) {
         return Optional.ofNullable(cachedKeys.get(id));
     }
 
     private Result<PublicKey> parseKey(String encodedKey) {
-        return registry.parse(encodedKey).compose(pk -> {
+        return registry.parse(encodedKey).compose(pk -> { // &line[use_feat_KeyParserRegistry_LocalPublicKeyServiceImpl_'parseKey']
             if (pk instanceof PublicKey publicKey) {
                 return Result.success(publicKey);
             } else {
@@ -80,8 +87,10 @@ public class LocalPublicKeyServiceImpl implements LocalPublicKeyService {
             }
         });
     }
+
     @Secrecy
     public Result<Void> addRawKey(String id, String rawKey) {
         return parseKey(rawKey).onSuccess((pk) -> cachedKeys.put(id, pk)).mapTo();
-    } 
+    }
 }
+// &end[feat_LocalPublicKeyServiceImpl]

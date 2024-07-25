@@ -37,6 +37,7 @@ import static org.mockito.Mockito.when;
 @Critical (secrecy={"Vault.resolveSecret(String):String",
 "InMemoryVault.resolveSecret(String):String",
 "ServiceExtension.initialize(ServiceExtensionContext):void",
+"FsVault.resolveSecret(String):String",
 "StsRemoteClientConfigurationExtensionTest.initialize(StsRemoteClientConfigurationExtension,ServiceExtensionContext,Vault):void"})
 public class StsRemoteClientConfigurationExtensionTest {
 

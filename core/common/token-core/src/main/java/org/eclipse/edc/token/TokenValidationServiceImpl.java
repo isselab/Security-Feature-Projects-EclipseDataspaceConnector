@@ -30,12 +30,12 @@ import org.gravity.security.annotations.requirements.Secrecy;
 import java.security.PublicKey;
 import java.text.ParseException;
 import java.util.List;
-@Critical(secrecy={"TokenValidationServiceImpl.validate(TokenRepresentation,PublicKeyResolver, List):Result",
+@Critical(secrecy={"validate(TokenRepresentation,PublicKeyResolver, List):Result",
 		"resolveKey(String):Result",
 		"LocalPublicKeyServiceImpl.resolveKey(String):Result",
 		"AbstractPublicKeyResolver.resolveInternal(String):Result",
 		"TokenValidationService.validate(TokenRepresentation,PublicKeyResolver,List):Result",
-		"Oauth2ServiceImpl.verifyJwtToken(TokenRepresentation,VerificationContext):Result" ,
+		"verifyJwtToken(TokenRepresentation,VerificationContext):Result" ,
 		"IdentityAndTrustExtension.tokenValidationAction():TokenValidationAction" } )
 public class TokenValidationServiceImpl implements TokenValidationService {
 
@@ -51,7 +51,7 @@ public class TokenValidationServiceImpl implements TokenValidationService {
             var signedJwt = SignedJWT.parse(token);
             var publicKeyId = signedJwt.getHeader().getKeyID();
 
-            var publicKeyResolutionResult = publicKeyResolver.resolveKey(publicKeyId);
+            var publicKeyResolutionResult = publicKeyResolver.resolveKey(publicKeyId); // &line[use_feat_LocalPublicKeyServiceImpl_TokenValidationServiceImpl]
 
             if (publicKeyResolutionResult.failed()) {
                 return publicKeyResolutionResult.mapTo();

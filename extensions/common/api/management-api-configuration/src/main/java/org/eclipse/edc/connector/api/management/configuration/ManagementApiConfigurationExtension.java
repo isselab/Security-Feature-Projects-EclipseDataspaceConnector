@@ -59,6 +59,7 @@ import static org.eclipse.edc.spi.constants.CoreConstants.JSON_LD;
 @Provides(ManagementApiConfiguration.class)
 @Extension(value = ManagementApiConfigurationExtension.NAME)
 @Critical(secrecy = {"webService:WebService" , "AuthenticationRequestFilter.AuthenticationRequestFilter(AuthenticationService)"})
+// &begin[use_feat_ServiceExtension_ManagementApiConfigurationExtension]
 public class ManagementApiConfigurationExtension implements ServiceExtension {
 
     public static final String NAME = "Management API configuration";
@@ -97,6 +98,7 @@ public class ManagementApiConfigurationExtension implements ServiceExtension {
     public String name() {
         return NAME;
     }
+
     @Secrecy
     @Override
     public void initialize(ServiceExtensionContext context) {
@@ -128,3 +130,4 @@ public class ManagementApiConfigurationExtension implements ServiceExtension {
         managementApiTransformerRegistry.register(new JsonValueToGenericTypeTransformer(jsonLdMapper));
     }
 }
+// &end[use_feat_ServiceExtension_ManagementApiConfigurationExtension]

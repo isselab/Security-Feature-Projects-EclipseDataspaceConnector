@@ -46,7 +46,8 @@ import static org.mockito.Mockito.when;
 		"resolve_keyIdNullMultipleKeys():void",
 		"resolve_keyIdIsNull_onlyOneVerificationMethod():void",
 		"resolve_didDoesNotContainPublicKey():void",
-		"resolve_withVerificationMethodUrlAsId():void"
+		"resolve_withVerificationMethodUrlAsId():void",
+		"KeyParserRegistry.parse(String):Result"
 		})
 class DidPublicKeyResolverImplTest {
 

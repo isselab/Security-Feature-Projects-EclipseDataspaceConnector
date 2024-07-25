@@ -25,6 +25,8 @@ import org.eclipse.edc.runtime.metamodel.annotation.Setting;
 import org.eclipse.edc.spi.EdcException;
 import org.eclipse.edc.spi.system.ServiceExtension;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Integrity;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,6 +38,7 @@ import static org.eclipse.edc.vault.filesystem.JskPrivateKeyResolverExtension.NA
 
 @Extension(NAME)
 @Provides({ PrivateKeyResolver.class, CertificateResolver.class })
+@Critical(integrity= {"keyStore:KeyStore"})
 public class JskPrivateKeyResolverExtension implements ServiceExtension {
     public static final String NAME = "JKS PrivateKeyResolver Extension";
 
@@ -47,6 +50,7 @@ public class JskPrivateKeyResolverExtension implements ServiceExtension {
 
     @Inject
     private KeyParserRegistry registry;
+    @Integrity
     private KeyStore keyStore;
 
 

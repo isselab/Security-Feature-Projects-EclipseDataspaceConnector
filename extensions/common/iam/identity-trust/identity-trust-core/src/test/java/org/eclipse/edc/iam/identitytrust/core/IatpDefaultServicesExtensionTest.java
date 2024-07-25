@@ -27,6 +27,8 @@ import org.eclipse.edc.spi.monitor.Monitor;
 import org.eclipse.edc.spi.result.Result;
 import org.eclipse.edc.spi.system.ServiceExtensionContext;
 import org.eclipse.edc.spi.types.domain.message.RemoteMessage;
+import org.gravity.security.annotations.requirements.Critical;
+import org.gravity.security.annotations.requirements.Secrecy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,8 +47,12 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(DependencyInjectionExtension.class)
+@Critical(secrecy= {"AbstractPrivateKeyResolver.resolvePrivateKey(String):Result",
+		"privateKeyResolver:PrivateKeyResolver",
+		"IatpDefaultServicesExtensionTest.setup(ServiceExtensionContext):void" })
 class IatpDefaultServicesExtensionTest {
-
+	
+	@Secrecy
     private final PrivateKeyResolver privateKeyResolver = mock();
 
     private static PrivateKey privateKey() throws JOSEException {

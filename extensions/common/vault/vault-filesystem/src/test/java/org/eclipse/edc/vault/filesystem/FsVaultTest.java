@@ -24,7 +24,9 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Critical(secrecy= {"Vault.resolveSecret(String):String",
-		"verifyResolution():void"})
+		"verifyResolution():void",
+		"FsVault.FsVault(Path,boolean)",
+		"FsVault.resolveSecret(String):String"})
 class FsVaultTest {
     private static final String TEST_VAULT = "test-vault.properties";
 
